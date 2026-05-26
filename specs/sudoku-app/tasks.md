@@ -689,7 +689,7 @@ created: 2026-05-26
 
 ---
 
-### 1.31 POC Checkpoint — end-to-end game loop verified
+### 1.31 POC Checkpoint — end-to-end game loop verified ✅
 
 - **Do**:
   1. Run full build skipping tests: `./gradlew build -x test`
