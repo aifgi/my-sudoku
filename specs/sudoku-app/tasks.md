@@ -910,7 +910,7 @@ created: 2026-05-26
 
 ---
 
-### 3.4 Implement GeneratorTest.kt
+### 3.4 Implement GeneratorTest.kt ✅
 
 - **Do**:
   1. Create `engine/src/test/kotlin/sudoku/engine/GeneratorTest.kt`
