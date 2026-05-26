@@ -85,7 +85,7 @@ created: 2026-05-26
 
 ---
 
-### 1.4 Create engine source directory skeleton
+### 1.4 Create engine source directory skeleton ✅
 
 - **Do**:
   1. Create directory `engine/src/main/kotlin/sudoku/engine/`
