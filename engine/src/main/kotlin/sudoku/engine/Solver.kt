@@ -4,6 +4,7 @@ object Solver {
 
     /** Returns a solved IntArray(81), or null if the board is invalid/unsolvable. */
     fun solve(board: Board): IntArray? {
+        if (computeConflicts(board.digits).isNotEmpty()) return null
         val digits = board.digits.copyOf()
         return if (backtrack(digits, 0)) digits else null
     }
