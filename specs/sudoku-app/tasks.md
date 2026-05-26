@@ -159,7 +159,7 @@ created: 2026-05-26
 
 ---
 
-### 1.8 Implement Solver.kt — constraint propagation + MRV backtracking
+### 1.8 Implement Solver.kt — constraint propagation + MRV backtracking ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/Solver.kt`
