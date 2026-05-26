@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import sudoku.engine.ALL_UNITS
 import sudoku.engine.Board
 import sudoku.engine.HintEngine
+import sudoku.engine.computeConflicts
 
 class GameViewModel(
     private val coroutineScope: CoroutineScope,
@@ -163,25 +163,8 @@ class GameViewModel(
         return state
     }
 
-    internal fun computeConflicts(digits: IntArray): Set<Int> {
-        val conflicts = mutableSetOf<Int>()
-        for (unit in ALL_UNITS) {
-            val seen = mutableMapOf<Int, Int>()
-            for (idx in unit) {
-                val d = digits[idx]
-                if (d != 0) {
-                    val prev = seen[d]
-                    if (prev != null) {
-                        conflicts += idx
-                        conflicts += prev
-                    } else {
-                        seen[d] = idx
-                    }
-                }
-            }
-        }
-        return conflicts
-    }
+    internal fun computeConflicts(digits: IntArray): Set<Int> =
+        sudoku.engine.computeConflicts(digits)
 
     private fun handleSideEffects(intent: GameIntent) {
         when (intent) {

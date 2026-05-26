@@ -14,6 +14,22 @@ val BOX_UNITS: Array<IntArray> = Array(9) { b ->
 }
 val ALL_UNITS: Array<IntArray> = ROW_UNITS + COL_UNITS + BOX_UNITS
 
+fun computeConflicts(digits: IntArray): Set<Int> {
+    val conflicts = mutableSetOf<Int>()
+    for (unit in ALL_UNITS) {
+        val seen = mutableMapOf<Int, Int>()
+        for (idx in unit) {
+            val d = digits[idx]
+            if (d != 0) {
+                val prev = seen[d]
+                if (prev != null) { conflicts += idx; conflicts += prev }
+                else seen[d] = idx
+            }
+        }
+    }
+    return conflicts
+}
+
 private const val ALL_CANDIDATES = (1 shl 1) or (1 shl 2) or (1 shl 3) or
         (1 shl 4) or (1 shl 5) or (1 shl 6) or
         (1 shl 7) or (1 shl 8) or (1 shl 9)
