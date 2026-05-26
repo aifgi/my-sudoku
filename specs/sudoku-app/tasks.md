@@ -900,7 +900,7 @@ created: 2026-05-26
 
 ---
 
-### V14 [VERIFY] Quality checkpoint: SolverTest passes
+### V14 [VERIFY] Quality checkpoint: SolverTest passes ✅
 
 - **Do**: Run SolverTest suite; all tests green
 - **Files**: n/a
