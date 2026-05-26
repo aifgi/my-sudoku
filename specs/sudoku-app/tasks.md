@@ -35,7 +35,7 @@ created: 2026-05-26
 
 ---
 
-### 1.1 Create root Gradle settings and version catalog
+### 1.1 Create root Gradle settings and version catalog ✅
 
 - **Do**:
   1. Create `settings.gradle.kts` at project root with `rootProject.name = "sudoku"` and `include(":engine", ":app")`
