@@ -176,7 +176,7 @@ created: 2026-05-26
 
 ---
 
-### 1.9 Implement Generator.kt — fillGrid and digHoles
+### 1.9 Implement Generator.kt — fillGrid and digHoles ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/Generator.kt`
