@@ -49,7 +49,7 @@ created: 2026-05-26
 
 ---
 
-### 1.2 [P] Create engine/build.gradle.kts
+### 1.2 [P] Create engine/build.gradle.kts ✅
 
 - **Do**:
   1. Create `engine/` directory
