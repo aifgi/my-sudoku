@@ -115,7 +115,7 @@ created: 2026-05-26
 
 ---
 
-### 1.6 Implement Difficulty.kt enum
+### 1.6 Implement Difficulty.kt enum ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/Difficulty.kt`
