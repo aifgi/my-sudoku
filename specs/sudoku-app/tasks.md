@@ -725,7 +725,7 @@ created: 2026-05-26
 
 ---
 
-### 2.2 Extract ROW/COL/BOX unit constants into Board.kt module level
+### 2.2 Extract ROW/COL/BOX unit constants into Board.kt module level ✅
 
 - **Do**:
   1. In `Board.kt`, ensure `ROW_UNITS`, `COL_UNITS`, `BOX_UNITS`, and `ALL_UNITS` are module-level `val` constants (not recomputed per call)
