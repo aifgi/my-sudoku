@@ -220,7 +220,7 @@ created: 2026-05-26
 
 ---
 
-### 1.11 Implement HintResult.kt sealed class
+### 1.11 Implement HintResult.kt sealed class ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/HintResult.kt`
