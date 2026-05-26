@@ -98,7 +98,7 @@ created: 2026-05-26
 
 ---
 
-### 1.5 Implement Cell.kt with index extension properties and peersOf
+### 1.5 Implement Cell.kt with index extension properties and peersOf ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/Cell.kt`
