@@ -709,7 +709,7 @@ created: 2026-05-26
 
 ---
 
-### 2.1 Enforce Board immutability — add copy-on-write documentation and validation
+### 2.1 Enforce Board immutability — add copy-on-write documentation and validation ✅
 
 - **Do**:
   1. In `Board.kt`, add KDoc to `withDigit` and `withErased` documenting the copy-on-write contract

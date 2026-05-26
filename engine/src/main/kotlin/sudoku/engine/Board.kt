@@ -32,6 +32,11 @@ class Board private constructor(
     val givens: BooleanArray,   // size 81, immutable after construction
     val candidates: IntArray,   // size 81, bitmask per cell
 ) {
+    init {
+        require(digits.size == 81 && givens.size == 81 && candidates.size == 81) {
+            "Board arrays must each have exactly 81 elements"
+        }
+    }
     companion object {
         fun fromDigits(digits: IntArray, givens: BooleanArray): Board {
             val d = digits.copyOf()
@@ -50,6 +55,10 @@ class Board private constructor(
         }
     }
 
+    /**
+     * Returns a new [Board] with [digit] placed at [index].
+     * Copy-on-write: this receiver is never mutated; a fresh copy of all arrays is made.
+     */
     fun withDigit(index: Int, digit: Int): Board {
         val d = digits.copyOf()
         d[index] = digit
@@ -65,6 +74,10 @@ class Board private constructor(
         return Board(d, givens.copyOf(), c)
     }
 
+    /**
+     * Returns a new [Board] with the digit at [index] cleared (set to 0).
+     * Copy-on-write: this receiver is never mutated; a fresh copy of all arrays is made.
+     */
     fun withErased(index: Int): Board {
         val d = digits.copyOf()
         d[index] = 0
