@@ -386,7 +386,7 @@ created: 2026-05-26
 
 ---
 
-### 1.18 Implement Main.kt — Compose Desktop entry point with window config
+### 1.18 Implement Main.kt — Compose Desktop entry point with window config ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/Main.kt`
@@ -404,7 +404,7 @@ created: 2026-05-26
 
 ---
 
-### 1.19 Implement App.kt — navigation between HomeScreen and GameScreen
+### 1.19 Implement App.kt — navigation between HomeScreen and GameScreen ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/ui/App.kt`
@@ -424,7 +424,7 @@ created: 2026-05-26
 
 ---
 
-### 1.20 Implement HomeScreen.kt — difficulty picker
+### 1.20 Implement HomeScreen.kt — difficulty picker ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/ui/HomeScreen.kt`
