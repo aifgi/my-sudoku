@@ -496,7 +496,7 @@ created: 2026-05-26
 
 ---
 
-### V8 [VERIFY] Quality checkpoint: SudokuBoard compiles
+### V8 [VERIFY] Quality checkpoint: SudokuBoard compiles ✅
 
 - **Do**: Compile app with full SudokuBoard; confirm Canvas, DrawScope, PathEffect APIs resolve
 - **Files**: n/a
