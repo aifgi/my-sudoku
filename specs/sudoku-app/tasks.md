@@ -671,7 +671,7 @@ created: 2026-05-26
 
 ---
 
-### 1.30 Full app build — first runnable POC
+### 1.30 Full app build — first runnable POC ✅
 
 - **Do**:
   1. Run `./gradlew :app:run` to launch the app for the first time
