@@ -323,7 +323,7 @@ created: 2026-05-26
 
 ---
 
-### 1.16 Implement GameViewModel.kt — reduce() pure function
+### 1.16 Implement GameViewModel.kt — reduce() pure function ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/state/GameViewModel.kt`
