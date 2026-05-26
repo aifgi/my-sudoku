@@ -450,7 +450,7 @@ created: 2026-05-26
 
 ---
 
-### 1.21 Implement SudokuBoard.kt — Canvas cell background layers
+### 1.21 Implement SudokuBoard.kt — Canvas cell background layers ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/ui/components/SudokuBoard.kt`
