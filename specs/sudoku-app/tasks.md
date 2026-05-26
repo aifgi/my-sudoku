@@ -878,7 +878,7 @@ created: 2026-05-26
 
 ---
 
-### 3.3 Implement SolverTest.kt
+### 3.3 Implement SolverTest.kt ✅
 
 - **Do**:
   1. Create `engine/src/test/kotlin/sudoku/engine/SolverTest.kt`
