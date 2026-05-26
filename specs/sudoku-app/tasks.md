@@ -584,7 +584,7 @@ created: 2026-05-26
 
 ---
 
-### 1.27 Implement CompletionOverlay.kt
+### 1.27 Implement CompletionOverlay.kt ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/ui/components/CompletionOverlay.kt`
