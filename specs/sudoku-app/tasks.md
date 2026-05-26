@@ -62,7 +62,7 @@ created: 2026-05-26
 
 ---
 
-### 1.3 [P] Create app/build.gradle.kts
+### 1.3 [P] Create app/build.gradle.kts ✅
 
 - **Do**:
   1. Create `app/` directory
