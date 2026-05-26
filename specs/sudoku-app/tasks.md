@@ -203,7 +203,7 @@ created: 2026-05-26
 
 ---
 
-### 1.10 Implement Grader.kt — technique-threshold human solver
+### 1.10 Implement Grader.kt — technique-threshold human solver ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/Grader.kt`
