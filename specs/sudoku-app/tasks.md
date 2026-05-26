@@ -765,7 +765,7 @@ created: 2026-05-26
 
 ---
 
-### 2.4 Extract keyboard handler into standalone function in GameScreen.kt
+### 2.4 Extract keyboard handler into standalone function in GameScreen.kt ✅
 
 - **Do**:
   1. In `GameScreen.kt`, extract the `onKeyEvent` lambda body into `private fun handleKeyEvent(keyEvent: KeyEvent, state: GameState, onIntent: (GameIntent) -> Unit): Boolean`
@@ -779,7 +779,7 @@ created: 2026-05-26
 
 ---
 
-### 2.5 Add window minimum size enforcement in Main.kt
+### 2.5 Add window minimum size enforcement in Main.kt ✅
 
 - **Do**:
   1. In `Main.kt`, confirm `minimumSize = DpSize(600.dp, 700.dp)` is set on `Window`
@@ -793,7 +793,7 @@ created: 2026-05-26
 
 ---
 
-### 2.6 Clean up GameViewModel.reduce() — extract helper functions
+### 2.6 Clean up GameViewModel.reduce() — extract helper functions ✅
 
 - **Do**:
   1. In `GameViewModel.kt`, extract `private fun applyEnterDigit(state: GameState, digit: Int): GameState` covering the guard check, undo stack push, digit array update, conflict recomputation, and completion check
