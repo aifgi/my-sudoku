@@ -568,7 +568,7 @@ created: 2026-05-26
 
 ---
 
-### 1.26 Implement PauseOverlay.kt
+### 1.26 Implement PauseOverlay.kt ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/ui/components/PauseOverlay.kt`
