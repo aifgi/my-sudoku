@@ -472,7 +472,7 @@ created: 2026-05-26
 
 ---
 
-### 1.22 Implement SudokuBoard.kt — digit rendering and grid lines
+### 1.22 Implement SudokuBoard.kt — digit rendering and grid lines ✅
 
 - **Do**:
   1. In `SudokuBoard.kt`, implement `fun DrawScope.drawDigits(state: GameState, cellSize: Float)`:
