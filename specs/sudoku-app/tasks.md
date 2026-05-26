@@ -313,7 +313,7 @@ created: 2026-05-26
 
 ---
 
-### V5 [VERIFY] Quality checkpoint: state layer compiles
+### V5 [VERIFY] Quality checkpoint: state layer compiles ✅
 
 - **Do**: Compile app module; confirm GameState and GameIntent resolve with correct engine type references (Difficulty, Board, HintResult)
 - **Files**: n/a
