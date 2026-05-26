@@ -237,7 +237,7 @@ created: 2026-05-26
 
 ---
 
-### 1.12 Implement HintEngine.kt — five-technique cascade
+### 1.12 Implement HintEngine.kt — five-technique cascade ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/HintEngine.kt`
