@@ -611,7 +611,7 @@ created: 2026-05-26
 
 ---
 
-### 1.28 Implement GameScreen.kt — layout skeleton
+### 1.28 Implement GameScreen.kt — layout skeleton ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/ui/GameScreen.kt`
@@ -634,7 +634,7 @@ created: 2026-05-26
 
 ---
 
-### 1.29 Implement GameScreen.kt — keyboard handler
+### 1.29 Implement GameScreen.kt — keyboard handler ✅
 
 - **Do**:
   1. In `GameScreen.kt`, set up focus infrastructure: `val focusRequester = remember { FocusRequester() }` + `LaunchedEffect(Unit) { focusRequester.requestFocus() }`
