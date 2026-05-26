@@ -270,7 +270,7 @@ created: 2026-05-26
 
 ---
 
-### 1.13 Create app source directory skeleton
+### 1.13 Create app source directory skeleton ✅
 
 - **Do**:
   1. Create `app/src/main/kotlin/sudoku/app/`
