@@ -1,16 +1,28 @@
 package sudoku.engine
 
+import kotlin.coroutines.cancellation.CancellationException
+
 object Generator {
 
     private const val MAX_ATTEMPTS = 100
 
+    // Difficulty is enforced by Kotlin's type system — no invalid enum values can be passed.
+
     /** Returns a puzzle Board (givens set) at the requested difficulty. */
     suspend fun generate(difficulty: Difficulty): Board {
-        repeat(MAX_ATTEMPTS) {
-            val solution = fillGrid() ?: return@repeat
-            val puzzle = digHoles(solution, difficulty) ?: return@repeat
-            val givens = BooleanArray(81) { puzzle[it] != 0 }
-            return Board.fromDigits(puzzle, givens)
+        for (attempt in 1..MAX_ATTEMPTS) {
+            println("Generator retry $attempt/$MAX_ATTEMPTS")
+            try {
+                val solution = fillGrid() ?: continue
+                val puzzle = digHoles(solution, difficulty) ?: continue
+                val givens = BooleanArray(81) { puzzle[it] != 0 }
+                return Board.fromDigits(puzzle, givens)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // Unexpected error on this attempt — log and retry
+                println("Generator attempt $attempt failed: ${e.message}")
+            }
         }
         throw IllegalStateException("Failed to generate puzzle after $MAX_ATTEMPTS attempts")
     }
