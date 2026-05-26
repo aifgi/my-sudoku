@@ -824,7 +824,7 @@ created: 2026-05-26
 
 ---
 
-### 3.1 [P] Implement BoardTest.kt — construction and immutability
+### 3.1 [P] Implement BoardTest.kt — construction and immutability ✅
 
 - **Do**:
   1. Create `engine/src/test/kotlin/sudoku/engine/BoardTest.kt`
@@ -844,7 +844,7 @@ created: 2026-05-26
 
 ---
 
-### 3.2 [P] Implement BoardTest.kt — peersOf correctness and conflict detection
+### 3.2 [P] Implement BoardTest.kt — peersOf correctness and conflict detection ✅
 
 - **Do**:
   1. In `BoardTest.kt`, add peer and conflict test methods:
