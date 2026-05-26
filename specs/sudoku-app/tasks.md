@@ -129,7 +129,7 @@ created: 2026-05-26
 
 ---
 
-### 1.7 Implement Board.kt flat array model
+### 1.7 Implement Board.kt flat array model ✅
 
 - **Do**:
   1. Create `engine/src/main/kotlin/sudoku/engine/Board.kt`
