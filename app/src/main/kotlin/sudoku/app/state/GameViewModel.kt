@@ -1,7 +1,6 @@
 package sudoku.app.state
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -185,6 +184,49 @@ class GameViewModel(
     }
 
     private fun handleSideEffects(intent: GameIntent) {
-        // Side effects implemented in task 1.17
+        when (intent) {
+            is GameIntent.StartNewGame -> launchGeneration(intent.difficulty)
+            is GameIntent.TogglePause -> syncTimer()
+            is GameIntent.PuzzleGenerated -> startTimer()
+            is GameIntent.GameCompleted -> timerJob?.cancel()
+            else -> {}
+        }
+    }
+
+    private fun launchGeneration(difficulty: sudoku.engine.Difficulty) {
+        generationJob?.cancel()
+        generationJob = coroutineScope.launch {
+            try {
+                val board = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                    sudoku.engine.Generator.generate(difficulty)
+                }
+                dispatch(GameIntent.PuzzleGenerated(board))
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _state.update { it.copy(isLoading = false, pendingDifficulty = null) }
+            }
+        }
+    }
+
+    private fun startTimer() {
+        timerJob?.cancel()
+        timerJob = coroutineScope.launch {
+            while (isActive) {
+                kotlinx.coroutines.delay(1_000)
+                if (!_state.value.isPaused && !_state.value.isComplete) {
+                    dispatch(GameIntent.TimerTick)
+                }
+            }
+        }
+    }
+
+    private fun syncTimer() {
+        val s = _state.value
+        if (!s.isPaused && !s.isComplete) {
+            startTimer()
+        } else {
+            timerJob?.cancel()
+        }
     }
 }

@@ -355,7 +355,7 @@ created: 2026-05-26
 
 ---
 
-### 1.17 Implement GameViewModel.kt — side effects (generation, timer)
+### 1.17 Implement GameViewModel.kt — side effects (generation, timer) ✅
 
 - **Do**:
   1. In `GameViewModel.kt`, add `private var timerJob: Job? = null` and `private var generationJob: Job? = null`
