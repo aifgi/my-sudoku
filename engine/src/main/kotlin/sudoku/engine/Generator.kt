@@ -15,7 +15,7 @@ object Generator {
                 val solution = fillGrid() ?: continue
                 val puzzle = digHoles(solution, difficulty) ?: continue
                 val givens = BooleanArray(81) { puzzle[it] != 0 }
-                return Board.fromDigits(puzzle, givens)
+                return Board.fromDigits(puzzle, givens, solution)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {

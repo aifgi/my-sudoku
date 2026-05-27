@@ -7,6 +7,7 @@ data class GameState(
     // Board data
     val digits: IntArray,
     val givens: BooleanArray,
+    val solution: IntArray,
     val conflictIndices: Set<Int>,
     val selectedIndex: Int?,
     val numberHighlightDigit: Int?,
@@ -41,6 +42,7 @@ data class GameState(
         val Initial = GameState(
             digits = IntArray(81),
             givens = BooleanArray(81),
+            solution = IntArray(81),
             conflictIndices = emptySet(),
             selectedIndex = null,
             numberHighlightDigit = null,
@@ -65,6 +67,7 @@ data class GameState(
         if (other !is GameState) return false
         return digits.contentEquals(other.digits) &&
                givens.contentEquals(other.givens) &&
+               solution.contentEquals(other.solution) &&
                conflictIndices == other.conflictIndices &&
                selectedIndex == other.selectedIndex &&
                numberHighlightDigit == other.numberHighlightDigit &&

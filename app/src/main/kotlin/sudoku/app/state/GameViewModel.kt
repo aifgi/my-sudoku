@@ -40,6 +40,7 @@ class GameViewModel(
             state.copy(
                 digits = digits,
                 givens = givens,
+                solution = intent.board.solution.copyOf(),
                 conflictIndices = emptySet(),
                 selectedIndex = null,
                 numberHighlightDigit = null,
@@ -102,7 +103,7 @@ class GameViewModel(
         val newDigits = state.digits.copyOf()
         newDigits[idx] = digit
         val newUndo = state.undoStack + listOf(state.digits.copyOf())
-        val conflicts = computeConflicts(newDigits)
+        val conflicts = computeConflicts(newDigits, state.solution)
         val newState = state.copy(
             digits = newDigits,
             conflictIndices = conflicts,
@@ -122,7 +123,7 @@ class GameViewModel(
         val newUndo = state.undoStack + listOf(state.digits.copyOf())
         return state.copy(
             digits = newDigits,
-            conflictIndices = computeConflicts(newDigits),
+            conflictIndices = computeConflicts(newDigits, state.solution),
             undoStack = newUndo,
             redoStack = emptyList(),
             numberHighlightDigit = null,
@@ -137,7 +138,7 @@ class GameViewModel(
         val newRedo = state.redoStack + listOf(state.digits.copyOf())
         return state.copy(
             digits = prevDigits,
-            conflictIndices = computeConflicts(prevDigits),
+            conflictIndices = computeConflicts(prevDigits, state.solution),
             undoStack = newUndo,
             redoStack = newRedo,
         )
@@ -150,7 +151,7 @@ class GameViewModel(
         val newUndo = state.undoStack + listOf(state.digits.copyOf())
         return state.copy(
             digits = nextDigits,
-            conflictIndices = computeConflicts(nextDigits),
+            conflictIndices = computeConflicts(nextDigits, state.solution),
             undoStack = newUndo,
             redoStack = newRedo,
         )
@@ -163,8 +164,13 @@ class GameViewModel(
         return state
     }
 
-    internal fun computeConflicts(digits: IntArray): Set<Int> =
-        sudoku.engine.computeConflicts(digits)
+    internal fun computeConflicts(digits: IntArray, solution: IntArray = IntArray(81)): Set<Int> {
+        val structural = sudoku.engine.computeConflicts(digits)
+        val wrong = digits.indices.filter { i ->
+            digits[i] != 0 && solution[i] != 0 && digits[i] != solution[i]
+        }.toSet()
+        return structural + wrong
+    }
 
     private fun handleSideEffects(intent: GameIntent) {
         when (intent) {

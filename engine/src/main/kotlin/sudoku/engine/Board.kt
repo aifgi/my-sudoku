@@ -47,27 +47,28 @@ class Board private constructor(
     val digits: IntArray,       // size 81, copied on mutation
     val givens: BooleanArray,   // size 81, immutable after construction
     val candidates: IntArray,   // size 81, bitmask per cell
+    val solution: IntArray,     // size 81, full solution (0 = unknown)
 ) {
     init {
-        require(digits.size == 81 && givens.size == 81 && candidates.size == 81) {
+        require(digits.size == 81 && givens.size == 81 && candidates.size == 81 && solution.size == 81) {
             "Board arrays must each have exactly 81 elements"
         }
     }
     companion object {
-        fun fromDigits(digits: IntArray, givens: BooleanArray): Board {
+        fun fromDigits(digits: IntArray, givens: BooleanArray, solution: IntArray = IntArray(81)): Board {
             val d = digits.copyOf()
             val g = givens.copyOf()
             val c = IntArray(81) { i ->
                 if (d[i] != 0) 0 else computeCandidates(i, d)
             }
-            return Board(d, g, c)
+            return Board(d, g, c, solution.copyOf())
         }
 
         fun empty(): Board {
             val d = IntArray(81)
             val g = BooleanArray(81)
             val c = IntArray(81) { ALL_CANDIDATES }
-            return Board(d, g, c)
+            return Board(d, g, c, IntArray(81))
         }
     }
 
@@ -87,7 +88,7 @@ class Board private constructor(
                 c[peer] = computeCandidates(peer, d)
             }
         }
-        return Board(d, givens.copyOf(), c)
+        return Board(d, givens.copyOf(), c, solution.copyOf())
     }
 
     /**
@@ -105,7 +106,7 @@ class Board private constructor(
                 c[peer] = computeCandidates(peer, d)
             }
         }
-        return Board(d, givens.copyOf(), c)
+        return Board(d, givens.copyOf(), c, solution.copyOf())
     }
 
     val isEmpty: Boolean get() = digits.all { it == 0 }
