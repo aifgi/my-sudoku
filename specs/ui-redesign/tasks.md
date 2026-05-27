@@ -87,7 +87,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.5 [GREEN] Create `AppColors.kt` — brand color constants
+- [x] 1.5 [GREEN] Create `AppColors.kt` — brand color constants
 
   - **Do**:
     1. Create `app/src/main/kotlin/sudoku/app/ui/AppColors.kt`
