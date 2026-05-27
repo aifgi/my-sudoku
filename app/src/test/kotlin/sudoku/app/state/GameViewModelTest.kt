@@ -132,6 +132,63 @@ class GameViewModelTest {
         assertEquals(42, result.selectedIndex, "selectedIndex should be set to first targetCell (42) from HintResult.Found")
     }
 
+    // Finding: Undo IS allowed reducer-side even when isGameOver=true.
+    // Game-over only disables the Undo button in the UI via the `!state.isGameOver`
+    // guard on the button `enabled` property; the reducer itself has no such guard.
+    @Test
+    fun `Undo still applies reducer-side when isGameOver is true`() {
+        val scope = TestScope(StandardTestDispatcher())
+        val vm = GameViewModel(scope)
+
+        // Build a game-over state with a non-empty undoStack
+        val solution = IntArray(81) { 1 }
+        val digits = IntArray(81) { 1 }
+        val previousDigits = IntArray(81) { 0 }
+        val givens = BooleanArray(81) { false }
+        val gameOverState = GameState.Initial.copy(
+            digits = digits,
+            givens = givens,
+            solution = solution,
+            isGameOver = true,
+            undoStack = listOf(previousDigits),
+        )
+        val stateField = GameViewModel::class.java.getDeclaredField("_state")
+        stateField.isAccessible = true
+        val stateFlow = stateField.get(vm) as kotlinx.coroutines.flow.MutableStateFlow<GameState>
+        stateFlow.value = gameOverState
+
+        vm.dispatch(GameIntent.Undo)
+
+        val result = vm.state.value
+        // Undo was applied: undoStack is now empty, digits reverted to previousDigits
+        assertTrue(result.undoStack.isEmpty(), "undoStack should be empty after Undo")
+        assertTrue(result.digits.contentEquals(previousDigits), "digits should revert to previousDigits after Undo")
+        // isGameOver is unchanged — the reducer does not touch it on Undo
+        assertTrue(result.isGameOver, "isGameOver should remain true (only UI disables the button)")
+    }
+
+    @Test
+    fun `StartNewGame after game-over resets isGameOver to false`() {
+        val scope = TestScope(StandardTestDispatcher())
+        val vm = GameViewModel(scope)
+
+        val stateField = GameViewModel::class.java.getDeclaredField("_state")
+        stateField.isAccessible = true
+        val stateFlow = stateField.get(vm) as kotlinx.coroutines.flow.MutableStateFlow<GameState>
+        stateFlow.value = buildGameOverState()
+
+        // StartNewGame sets isLoading = true and triggers async puzzle generation.
+        // We verify the reducer side immediately: isGameOver is NOT reset by StartNewGame itself.
+        vm.dispatch(GameIntent.StartNewGame(sudoku.engine.Difficulty.EASY))
+        assertTrue(vm.state.value.isLoading, "isLoading should be true after StartNewGame")
+
+        // Simulate the PuzzleGenerated callback that the async job would dispatch.
+        val board = sudoku.engine.Board.fromDigits(IntArray(81), BooleanArray(81))
+        vm.dispatch(GameIntent.PuzzleGenerated(board))
+
+        assertFalse(vm.state.value.isGameOver, "isGameOver should be false after PuzzleGenerated (new game started)")
+    }
+
     @Test
     fun `isGameOver true does not trigger isComplete on empty board`() {
         val scope = TestScope(StandardTestDispatcher())

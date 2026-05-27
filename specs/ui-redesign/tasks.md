@@ -210,7 +210,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
 
 ---
 
-- [ ] 2.1 [GREEN] Add engine test: Undo disabled after game-over; keyboard guard
+- [x] 2.1 [GREEN] Add engine test: Undo disabled after game-over; keyboard guard
 
   - **Do**:
     1. Add test: `Undo` intent on `isGameOver = true` state → still applies (undo is state-only; game-over only disables UI, not the reducer). Verify by confirming `undoStack` shrinks — OR document that undo IS allowed reducer-side and UI disables it.
