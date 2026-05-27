@@ -1018,7 +1018,7 @@ created: 2026-05-26
 
 ---
 
-### 4.1 Add GitHub Actions CI workflow file
+### [x] 4.1 Add GitHub Actions CI workflow file
 
 - **Do**:
   1. Create `.github/workflows/build.yml`
