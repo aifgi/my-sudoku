@@ -31,6 +31,6 @@ fun main() = application {
         state = rememberWindowState(width = 700.dp, height = 800.dp),
     ) {
         window.minimumSize = java.awt.Dimension(600, 700)
-        App(viewModel)
+        App(viewModel, onExitConfirmed = ::exitApplication)
     }
 }

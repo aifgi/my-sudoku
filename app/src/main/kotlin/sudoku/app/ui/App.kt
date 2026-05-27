@@ -11,7 +11,7 @@ import sudoku.app.state.GameIntent
 import sudoku.app.state.GameViewModel
 
 @Composable
-fun App(viewModel: GameViewModel) {
+fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
     val state by viewModel.state.collectAsState()
     val onIntent = viewModel::dispatch
 
@@ -30,7 +30,7 @@ fun App(viewModel: GameViewModel) {
             title = { Text("Quit Game?") },
             text = { Text("You have unsaved progress. Are you sure you want to quit?") },
             confirmButton = {
-                TextButton(onClick = { onIntent(GameIntent.ConfirmQuit) }) {
+                TextButton(onClick = { onIntent(GameIntent.ConfirmQuit); onExitConfirmed() }) {
                     Text("Quit")
                 }
             },
