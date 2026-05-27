@@ -78,7 +78,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] V1 [VERIFY] Quality checkpoint: engine tests + build green
+- [x] V1 [VERIFY] Quality checkpoint: engine tests + build green
 
   - **Do**: Run engine tests and full app build
   - **Verify**: `./gradlew :engine:test && ./gradlew :app:build`
