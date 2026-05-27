@@ -273,7 +273,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
 
 ---
 
-- [ ] V5 [VERIFY] AC checklist
+- [x] V5 [VERIFY] AC checklist
 
   - **Do**: Programmatically verify each FR is satisfied:
     - FR-3 (`isGameOver: Boolean`): `grep "isGameOver: Boolean" /workspace/app/src/main/kotlin/sudoku/app/state/GameState.kt`
