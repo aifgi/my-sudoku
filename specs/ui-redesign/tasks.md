@@ -239,7 +239,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
 
 ---
 
-- [ ] VE1 [VERIFY] E2E startup: build app for run
+- [x] VE1 [VERIFY] E2E startup: build app for run
 
   - **Do**:
     1. Run build to confirm runnable artifact: `./gradlew :app:build`
@@ -249,7 +249,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
   - **Done when**: Build exits 0, app artifact produced
   - **Commit**: None
 
-- [ ] VE2 [VERIFY] E2E check: verify key code paths present in built artifact
+- [x] VE2 [VERIFY] E2E check: verify key code paths present in built artifact
 
   - **Do**:
     1. Confirm `isGameOver` field present in compiled state: `grep -r "isGameOver" /workspace/app/src/main/kotlin/ | wc -l`
@@ -264,7 +264,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
   - **Done when**: All structural checks pass
   - **Commit**: None
 
-- [ ] VE3 [VERIFY] E2E cleanup: no stale build artifacts blocking
+- [x] VE3 [VERIFY] E2E cleanup: no stale build artifacts blocking
 
   - **Do**: No persistent process to kill (build-only verification). Confirm working directory is clean for PR.
   - **Verify**: `echo VE3_PASS`
