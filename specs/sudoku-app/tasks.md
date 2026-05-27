@@ -944,7 +944,7 @@ created: 2026-05-26
 
 ---
 
-### 3.5 Implement GraderTest.kt — known puzzles
+### 3.5 Implement GraderTest.kt — known puzzles ✅
 
 - **Do**:
   1. Create `engine/src/test/kotlin/sudoku/engine/GraderTest.kt`
