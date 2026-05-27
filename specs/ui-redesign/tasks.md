@@ -103,7 +103,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.6 [GREEN] Create `GameOverDialog.kt` — non-dismissible game-over dialog
+- [x] 1.6 [GREEN] Create `GameOverDialog.kt` — non-dismissible game-over dialog
 
   - **Do**:
     1. Create `app/src/main/kotlin/sudoku/app/ui/components/GameOverDialog.kt`
