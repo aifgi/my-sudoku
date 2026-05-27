@@ -988,7 +988,7 @@ created: 2026-05-26
 
 ---
 
-### 3.7 Run full engine test suite and verify ≥80% coverage
+### [x] 3.7 Run full engine test suite and verify ≥80% coverage
 
 - **Do**:
   1. Run all engine tests: `./gradlew :engine:test`
