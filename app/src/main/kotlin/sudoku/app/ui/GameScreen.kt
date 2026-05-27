@@ -1,18 +1,28 @@
 package sudoku.app.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Badge
+import androidx.compose.material.BadgedBox
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -20,8 +30,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.isCtrlPressed
@@ -30,15 +40,22 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import sudoku.app.state.GameIntent
 import sudoku.app.state.GameState
+import sudoku.app.ui.AppColors
 import sudoku.app.ui.components.CompletionOverlay
+import sudoku.app.ui.components.GameOverDialog
 import sudoku.app.ui.components.HintBanner
 import sudoku.app.ui.components.NumberPad
 import sudoku.app.ui.components.PauseOverlay
 import sudoku.app.ui.components.SudokuBoard
-import sudoku.app.ui.components.TimerDisplay
+import sudoku.app.ui.components.formatTime
 import sudoku.engine.Difficulty
 
 @Composable
@@ -46,65 +63,24 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
-    Column(
+    Row(
         modifier = Modifier
             .fillMaxSize()
+            .background(AppColors.Background)
             .focusRequester(focusRequester)
             .focusable()
-            .onKeyEvent { keyEvent ->
-                handleKeyEvent(keyEvent, state, onIntent)
-            }
+            .onKeyEvent { keyEvent -> handleKeyEvent(keyEvent, state, onIntent) },
     ) {
-        // Top toolbar
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        // ── Left: Sudoku board ──────────────────────────────────────────────
+        Box(
+            modifier = Modifier
+                .weight(0.6f)
+                .fillMaxHeight()
+                .padding(12.dp),
+            contentAlignment = Alignment.Center,
         ) {
-            Button(onClick = {
-                if (state.undoStack.isNotEmpty() && !state.isComplete) {
-                    onIntent(GameIntent.StartNewGame(state.difficulty))
-                } else {
-                    onIntent(GameIntent.StartNewGame(state.difficulty))
-                }
-            }) { Text("New Game") }
-            Spacer(modifier = Modifier.weight(1f))
-            Text("Sudoku", style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.weight(1f))
-            TimerDisplay(seconds = state.timerSeconds, isPaused = state.isPaused)
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { onIntent(GameIntent.TogglePause) }) {
-                Text(if (state.isPaused) "▶" else "⏸")
-            }
-        }
-
-        // Second toolbar
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Button(
-                onClick = { onIntent(GameIntent.Undo) },
-                enabled = state.undoStack.isNotEmpty(),
-            ) {
-                Text("↩")
-            }
-            Spacer(modifier = Modifier.width(4.dp))
-            Button(
-                onClick = { onIntent(GameIntent.Redo) },
-                enabled = state.redoStack.isNotEmpty(),
-            ) {
-                Text("↪")
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Button(onClick = { onIntent(GameIntent.RequestHint) }) {
-                Text("Hint")
-            }
-        }
-
-        // Board area
-        Box(modifier = Modifier.weight(1f)) {
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator()
             } else {
                 SudokuBoard(
                     state = state,
@@ -124,15 +100,106 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
             }
         }
 
-        // NumberPad
-        NumberPad(
-            onDigit = { digit -> onIntent(GameIntent.EnterDigit(digit)) },
-            onErase = { onIntent(GameIntent.EraseCell) },
-            enabled = !state.isLoading && !state.isComplete && !state.isPaused,
-        )
+        // ── Right: Controls panel ───────────────────────────────────────────
+        Column(
+            modifier = Modifier
+                .weight(0.4f)
+                .fillMaxHeight()
+                .padding(start = 4.dp, end = 16.dp, top = 16.dp, bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            // Stats row: Mistakes | Time + Pause
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                StatItem(label = "Mistakes", value = "${state.mistakeCount}/3")
+                StatItem(
+                    label = "Time",
+                    value = formatTime(state.timerSeconds),
+                    trailing = {
+                        Box(
+                            modifier = Modifier
+                                .padding(start = 6.dp)
+                                .size(28.dp)
+                                .clip(CircleShape)
+                                .background(AppColors.PauseBtnBg)
+                                .clickable { onIntent(GameIntent.TogglePause) },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = if (state.isPaused) "▶" else "⏸",
+                                fontSize = 12.sp,
+                                color = AppColors.Primary,
+                            )
+                        }
+                    },
+                )
+            }
 
-        // HintBanner
-        HintBanner(hintResult = state.hintResult)
+            // Action buttons: Undo | Erase | Hints(N)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                ActionButton(
+                    label = "↺",
+                    enabled = state.undoStack.isNotEmpty() && !state.isComplete && !state.isGameOver,
+                    onClick = { onIntent(GameIntent.Undo) },
+                )
+                ActionButton(
+                    label = "⌫",
+                    enabled = !state.isLoading && !state.isComplete && !state.isPaused && !state.isGameOver,
+                    onClick = { onIntent(GameIntent.EraseCell) },
+                )
+                BadgedActionButton(
+                    label = "💡",
+                    badge = state.hintsRemaining.toString(),
+                    badgeColor = AppColors.Primary,
+                    enabled = !state.isLoading && !state.isComplete && !state.isPaused && state.hintsRemaining > 0 && !state.isGameOver,
+                    onClick = { onIntent(GameIntent.RequestHint) },
+                )
+            }
+
+            // Hint banner — fixed-height slot so layout doesn't shift
+            Box(modifier = Modifier.fillMaxWidth().height(56.dp)) {
+                if (state.hintResult != null) {
+                    HintBanner(hintResult = state.hintResult)
+                }
+            }
+
+            // 3×3 number pad
+            NumberPad(
+                onDigit = { digit -> onIntent(GameIntent.EnterDigit(digit)) },
+                enabled = !state.isLoading && !state.isComplete && !state.isPaused && !state.isGameOver,
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            // New Game button
+            Button(
+                onClick = { onIntent(GameIntent.StartNewGame(state.difficulty)) },
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = AppColors.NewGameBtn,
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(12.dp),
+                elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
+            ) {
+                Text(
+                    text = "New Game",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+        }
+    }
+
+    // Game over dialog
+    if (state.isGameOver) {
+        GameOverDialog(onNewGame = { onIntent(GameIntent.StartNewGame(state.difficulty)) })
     }
 
     // New game confirmation dialog
@@ -146,8 +213,91 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
             },
             dismissButton = {
                 TextButton(onClick = { onIntent(GameIntent.CancelNewGame) }) { Text("Cancel") }
-            }
+            },
         )
+    }
+}
+
+@Composable
+private fun StatItem(
+    label: String,
+    value: String,
+    trailing: (@Composable () -> Unit)? = null,
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = label,
+            fontSize = 11.sp,
+            color = AppColors.StatLabel,
+            fontWeight = FontWeight.Medium,
+        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = value,
+                fontSize = 18.sp,
+                color = AppColors.StatValue,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace,
+            )
+            trailing?.invoke()
+        }
+    }
+}
+
+@Composable
+private fun ActionButton(
+    label: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .size(52.dp)
+            .clip(CircleShape)
+            .background(if (enabled) AppColors.ActionBtnBg else AppColors.ActionBtnDis)
+            .clickable(enabled = enabled, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            fontSize = 20.sp,
+            color = if (enabled) AppColors.Primary else Color(0xFFAAAAAA),
+        )
+    }
+}
+
+@Composable
+private fun BadgedActionButton(
+    label: String,
+    badge: String,
+    badgeColor: Color,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    BadgedBox(
+        badge = {
+            Badge(
+                backgroundColor = badgeColor,
+                contentColor = Color.White,
+            ) {
+                Text(badge, fontSize = 8.sp)
+            }
+        },
+    ) {
+        Box(
+            modifier = Modifier
+                .size(52.dp)
+                .clip(CircleShape)
+                .background(if (enabled) AppColors.ActionBtnBg else AppColors.ActionBtnDis)
+                .clickable(enabled = enabled, onClick = onClick),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = label,
+                fontSize = 20.sp,
+                color = if (enabled) AppColors.Primary else Color(0xFFAAAAAA),
+            )
+        }
     }
 }
 
@@ -158,7 +308,8 @@ private fun handleKeyEvent(
 ): Boolean {
     if (keyEvent.type != KeyEventType.KeyDown) return false
 
-    // When paused, only allow toggle pause
+    if (state.isGameOver) return false
+
     if (state.isPaused) {
         return when (keyEvent.key) {
             Key.P, Key.Spacebar -> { onIntent(GameIntent.TogglePause); true }
@@ -195,7 +346,9 @@ private fun handleKeyEvent(
             onIntent(GameIntent.TogglePause); true
         }
         keyEvent.key == Key.H -> { onIntent(GameIntent.RequestHint); true }
-        (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && keyEvent.key == Key.Z && !keyEvent.isShiftPressed -> { onIntent(GameIntent.Undo); true }
+        (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && keyEvent.key == Key.Z && !keyEvent.isShiftPressed -> {
+            onIntent(GameIntent.Undo); true
+        }
         (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && (keyEvent.key == Key.Y ||
             (keyEvent.key == Key.Z && keyEvent.isShiftPressed)) -> {
             onIntent(GameIntent.Redo); true

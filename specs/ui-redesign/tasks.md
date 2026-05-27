@@ -126,7 +126,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.7 [GREEN] Modify `GameScreen.kt` — remove pencil button, fix weights, fixed hint slot, game-over guards, show dialog, use AppColors
+- [x] 1.7 [GREEN] Modify `GameScreen.kt` — remove pencil button, fix weights, fixed hint slot, game-over guards, show dialog, use AppColors
 
   - **Do**:
     1. Change board panel weight `0.58f` → `0.6f`; right panel weight `0.42f` → `0.4f`
