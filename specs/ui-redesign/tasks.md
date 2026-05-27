@@ -163,7 +163,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.9 [VERIFY] FR-9 structural check: NumberPad is 3×3 grid, digits 1–9 only, no erase button inside
+- [x] 1.9 [VERIFY] FR-9 structural check: NumberPad is 3×3 grid, digits 1–9 only, no erase button inside
 
   - **Do**:
     1. Confirm nested `Column + Row` pattern: `grep -n "for (row in 0..2)" /workspace/app/src/main/kotlin/sudoku/app/ui/components/NumberPad.kt`
@@ -179,7 +179,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.10 [VERIFY] FR-11 canvas layer check: row/col/box highlight is Layer 2 in SudokuBoard
+- [x] 1.10 [VERIFY] FR-11 canvas layer check: row/col/box highlight is Layer 2 in SudokuBoard
 
   - **Do**:
     1. Confirm Layer 2 highlight block exists: `grep -n "Layer 2" /workspace/app/src/main/kotlin/sudoku/app/ui/components/SudokuBoard.kt`
