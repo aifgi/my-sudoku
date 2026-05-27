@@ -37,6 +37,11 @@ data class GameState(
 
     // Quit confirmation dialog
     val showQuitConfirmation: Boolean,
+
+    // Stats
+    val mistakeCount: Int,
+    val hintsRemaining: Int,
+    val isGameOver: Boolean,
 ) {
     companion object {
         val Initial = GameState(
@@ -58,6 +63,9 @@ data class GameState(
             showNewGameConfirmation = false,
             newGameTargetDifficulty = null,
             showQuitConfirmation = false,
+            mistakeCount = 0,
+            hintsRemaining = 3,
+            isGameOver = false,
         )
     }
 
@@ -82,7 +90,10 @@ data class GameState(
                pendingDifficulty == other.pendingDifficulty &&
                showNewGameConfirmation == other.showNewGameConfirmation &&
                newGameTargetDifficulty == other.newGameTargetDifficulty &&
-               showQuitConfirmation == other.showQuitConfirmation
+               showQuitConfirmation == other.showQuitConfirmation &&
+               mistakeCount == other.mistakeCount &&
+               hintsRemaining == other.hintsRemaining &&
+               isGameOver == other.isGameOver
     }
 
     override fun hashCode(): Int = digits.contentHashCode() * 31 + givens.contentHashCode()
