@@ -195,7 +195,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] V3 [VERIFY] Full quality gate: engine tests + build
+- [x] V3 [VERIFY] Full quality gate: engine tests + build
 
   - **Do**: Run engine tests and full build; confirm no regressions
   - **Verify**: `./gradlew :engine:test && ./gradlew :app:build`
