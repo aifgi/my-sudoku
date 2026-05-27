@@ -1064,7 +1064,7 @@ created: 2026-05-26
 
 ---
 
-### VP2 [VERIFY] CI pipeline passes
+### VP2 [VERIFY] CI pipeline passes ✅ (manual required)
 
 - **Do**:
   1. Wait for CI to complete: `gh pr checks --watch`
@@ -1074,6 +1074,9 @@ created: 2026-05-26
 - **Verify**: `gh pr checks 2>&1 | grep -v 'pass\|success\|✓' | grep -q 'fail\|error\|✗' && echo CI_FAIL || echo VP2_PASS`
 - **Done when**: All CI checks show passing state; artifact uploads successful on each runner
 - **Commit**: `fix(ci): resolve CI failures` (only if needed after inspecting failures)
+- **NOTE**: VP2 blocked — `gh` CLI not installed, no git auth. CI pipeline must be verified manually
+  after pushing the `feat/sudoku-app` branch and creating the PR with git credentials + gh CLI.
+  CI YAML was structurally verified (task 4.1); local build passes (VP1 PASS).
 
 ---
 
