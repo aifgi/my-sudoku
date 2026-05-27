@@ -146,7 +146,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.8 [GREEN] Modify `NumberPad.kt` — use `AppColors` for button colors
+- [x] 1.8 [GREEN] Modify `NumberPad.kt` — use `AppColors` for button colors
 
   - **Do**:
     1. Add import `import sudoku.app.ui.AppColors`
