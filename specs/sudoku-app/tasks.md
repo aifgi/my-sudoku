@@ -964,17 +964,7 @@ created: 2026-05-26
 
 ---
 
-### V16 [VERIFY] Quality checkpoint: GraderTest passes
-
-- **Do**: Run GraderTest suite; all tests green
-- **Files**: n/a
-- **Verify**: `./gradlew :engine:test --tests "sudoku.engine.GraderTest" 2>&1 | grep -q 'BUILD SUCCESSFUL' && echo V16_PASS`
-- **Done when**: All GraderTest methods pass
-- **Commit**: `chore(engine): fix Grader technique-threshold classification to pass GraderTest` (only if fixes needed)
-
----
-
-### 3.6 Implement HintEngineTest.kt — technique detection
+### [x] 3.6 Implement HintEngineTest.kt — technique detection
 
 - **Do**:
   1. Create `engine/src/test/kotlin/sudoku/engine/HintEngineTest.kt`
@@ -995,16 +985,6 @@ created: 2026-05-26
 - **Commit**: `test(engine): add HintEngineTest for all five techniques and NoHint/NoHintForDifficulty variants`
 - _Requirements: FR-010, AC-4.2, AC-4.4, AC-4.8, AC-9.1, AC-9.4, NFR-011_
 - _Design: Test Strategy — HintEngineTest.kt_
-
----
-
-### V17 [VERIFY] Quality checkpoint: HintEngineTest passes
-
-- **Do**: Run HintEngineTest suite; all tests green
-- **Files**: n/a
-- **Verify**: `./gradlew :engine:test --tests "sudoku.engine.HintEngineTest" 2>&1 | grep -q 'BUILD SUCCESSFUL' && echo V17_PASS`
-- **Done when**: All HintEngineTest methods pass
-- **Commit**: `chore(engine): fix HintEngine technique detection to pass HintEngineTest` (only if fixes needed)
 
 ---
 
