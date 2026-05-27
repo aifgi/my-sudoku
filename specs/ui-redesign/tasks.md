@@ -117,7 +117,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] V2 [VERIFY] Quality checkpoint: build after new files
+- [x] V2 [VERIFY] Quality checkpoint: build after new files
 
   - **Do**: Full build to confirm AppColors and GameOverDialog compile cleanly
   - **Verify**: `./gradlew :app:build`
