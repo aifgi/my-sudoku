@@ -37,7 +37,7 @@ jobs:
 
       - name: Install WiX Toolset (Windows only)
         if: runner.os == 'Windows'
-        run: choco install wixtoolset --version=4.0.5 -y
+        uses: crazy-max/ghaction-setup-wix@v2
 
       - name: Build and test
         run: ./gradlew :engine:test :app:${{ matrix.task }}
