@@ -46,7 +46,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.3 [RED] Failing test: `TimerTick` ignored when `isGameOver`; `PuzzleGenerated` resets `isGameOver`; `RequestHint` sets `selectedIndex`
+- [x] 1.3 [RED] Failing test: `TimerTick` ignored when `isGameOver`; `PuzzleGenerated` resets `isGameOver`; `RequestHint` sets `selectedIndex`
 
   - **Do**:
     1. Add test: `TimerTick` dispatched on a state with `isGameOver = true` → `timerSeconds` unchanged
