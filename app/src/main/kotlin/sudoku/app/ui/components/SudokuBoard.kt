@@ -63,14 +63,14 @@ private fun DrawScope.drawCells(state: GameState, cellSize: Float) {
             drawRect(Color(0xFFFFF3CD), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
         }
 
-        // Layer 3: conflict overlay
-        if (i in state.conflictIndices) {
-            drawRect(Color(0xFFFFCCCC), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
-        }
-
-        // Layer 4: selected overlay
+        // Layer 3: selected overlay
         if (i == state.selectedIndex) {
             drawRect(Color(0xFFC5D8FF), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+        }
+
+        // Layer 4: conflict overlay (drawn on top so it remains visible when selected)
+        if (i in state.conflictIndices) {
+            drawRect(Color(0xFFFFCCCC), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
         }
     }
 }
