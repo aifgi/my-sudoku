@@ -2,7 +2,7 @@
   "source": "spec",
   "name": "ui-redesign",
   "basePath": "specs/ui-redesign",
-  "phase": "requirements",
+  "phase": "design",
   "taskIndex": 0,
   "totalTasks": 0,
   "taskIteration": 1,
