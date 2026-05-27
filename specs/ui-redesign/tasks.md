@@ -297,7 +297,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
 
 ---
 
-- [ ] 4.1 [GREEN] Create PR and verify CI
+- [x] 4.1 [GREEN] Create PR and verify CI
 
   - **Do**:
     1. Confirm on feature branch: `git branch --show-current`
