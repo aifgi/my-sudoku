@@ -195,9 +195,7 @@ private fun handleKeyEvent(
             onIntent(GameIntent.TogglePause); true
         }
         keyEvent.key == Key.H -> { onIntent(GameIntent.RequestHint); true }
-        (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && keyEvent.key == Key.Z && !keyEvent.isShiftPressed -> {
-            onIntent(GameIntent.Undo); true
-        }
+        (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && keyEvent.key == Key.Z && !keyEvent.isShiftPressed -> { onIntent(GameIntent.Undo); true }
         (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && (keyEvent.key == Key.Y ||
             (keyEvent.key == Key.Z && keyEvent.isShiftPressed)) -> {
             onIntent(GameIntent.Redo); true

@@ -1080,7 +1080,7 @@ created: 2026-05-26
 
 ---
 
-### VP3 [VERIFY] AC checklist — programmatic verification
+### VP3 [VERIFY] AC checklist — programmatic verification ✅
 
 - **Do**:
   1. Verify AC-1.1 (four difficulty buttons): `grep -r 'Difficulty.EASY\|Difficulty.MEDIUM\|Difficulty.HARD\|Difficulty.EXPERT' app/src/main/kotlin/sudoku/app/ui/HomeScreen.kt | wc -l | grep -q '[4-9]' && echo AC1_PASS`

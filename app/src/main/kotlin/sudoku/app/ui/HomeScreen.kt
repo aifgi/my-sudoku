@@ -29,15 +29,22 @@ fun HomeScreen(onDifficultySelected: (Difficulty) -> Unit) {
                 style = MaterialTheme.typography.h4,
             )
             Spacer(modifier = Modifier.height(32.dp))
-            Difficulty.entries.forEach { difficulty ->
-                Button(
-                    onClick = { onDifficultySelected(difficulty) },
-                    modifier = Modifier.widthIn(min = 200.dp),
-                ) {
-                    Text(difficulty.name.lowercase().replaceFirstChar { it.uppercase() })
-                }
-                Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { onDifficultySelected(Difficulty.EASY) }, modifier = Modifier.widthIn(min = 200.dp)) {
+                Text("Easy")
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { onDifficultySelected(Difficulty.MEDIUM) }, modifier = Modifier.widthIn(min = 200.dp)) {
+                Text("Medium")
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { onDifficultySelected(Difficulty.HARD) }, modifier = Modifier.widthIn(min = 200.dp)) {
+                Text("Hard")
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { onDifficultySelected(Difficulty.EXPERT) }, modifier = Modifier.widthIn(min = 200.dp)) {
+                Text("Expert")
+            }
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
