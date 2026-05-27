@@ -28,7 +28,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.2 [GREEN] Add `isGameOver: Boolean` to `GameState`; wire `applyEnterDigit`
+- [x] 1.2 [GREEN] Add `isGameOver: Boolean` to `GameState`; wire `applyEnterDigit`
 
   - **Do**:
     1. In `GameState.kt`: add `val isGameOver: Boolean` field (after `hintsRemaining`)

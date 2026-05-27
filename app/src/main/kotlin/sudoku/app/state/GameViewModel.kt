@@ -52,6 +52,9 @@ class GameViewModel(
                 isComplete = false,
                 isLoading = false,
                 pendingDifficulty = null,
+                mistakeCount = 0,
+                hintsRemaining = 3,
+                isGameOver = false,
             )
         }
         is GameIntent.SelectCell -> {
@@ -74,6 +77,7 @@ class GameViewModel(
             state.copy(
                 hintResult = HintEngine.findHint(board, state.difficulty),
                 numberHighlightDigit = null,
+                hintsRemaining = maxOf(0, state.hintsRemaining - 1),
             )
         }
         is GameIntent.TogglePause -> state.copy(
@@ -104,15 +108,19 @@ class GameViewModel(
         newDigits[idx] = digit
         val newUndo = state.undoStack + listOf(state.digits.copyOf())
         val conflicts = computeConflicts(newDigits, state.solution)
-        val newState = state.copy(
+        val isWrong = state.solution[idx] != 0 && digit != state.solution[idx]
+        val newMistakeCount = if (isWrong) state.mistakeCount + 1 else state.mistakeCount
+        val withMistake = state.copy(
             digits = newDigits,
             conflictIndices = conflicts,
             undoStack = newUndo,
             redoStack = emptyList(),
             numberHighlightDigit = null,
             hintResult = null,
+            mistakeCount = newMistakeCount,
+            isGameOver = newMistakeCount >= 3,
         )
-        return checkCompletion(newState)
+        return if (withMistake.isGameOver) withMistake else checkCompletion(withMistake)
     }
 
     private fun applyEraseCell(state: GameState): GameState {
