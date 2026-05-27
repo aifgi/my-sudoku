@@ -12,7 +12,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.1 [RED] Failing test: `isGameOver` set when 3rd mistake entered
+- [x] 1.1 [RED] Failing test: `isGameOver` set when 3rd mistake entered
 
   - **Do**:
     1. Open `engine/src/test/kotlin/sudoku/engine/` — find or create `GameViewModelTest.kt` (check if exists first with `ls /workspace/engine/src/test/kotlin/sudoku/engine/`)
