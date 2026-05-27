@@ -62,7 +62,7 @@ Focus: TDD-driven implementation. State changes first (testable via engine tests
 
 ---
 
-- [ ] 1.4 [GREEN] Wire `TimerTick` guard, `PuzzleGenerated` reset, `RequestHint → selectedIndex`, timer cancel in `dispatch`
+- [x] 1.4 [GREEN] Wire `TimerTick` guard, `PuzzleGenerated` reset, `RequestHint → selectedIndex`, timer cancel in `dispatch`
 
   - **Do**:
     1. In `GameViewModel.reduce`, `TimerTick` branch: change guard to `!state.isPaused && !state.isComplete && !state.isGameOver && !state.isLoading`

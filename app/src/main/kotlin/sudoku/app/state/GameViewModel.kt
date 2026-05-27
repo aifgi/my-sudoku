@@ -21,6 +21,7 @@ class GameViewModel(
     fun dispatch(intent: GameIntent) {
         _state.update { current -> reduce(current, intent) }
         handleSideEffects(intent)
+        if (_state.value.isGameOver) timerJob?.cancel()
     }
 
     private fun reduce(state: GameState, intent: GameIntent): GameState = when (intent) {
@@ -74,17 +75,20 @@ class GameViewModel(
         is GameIntent.Redo -> applyRedo(state)
         is GameIntent.RequestHint -> {
             val board = Board.fromDigits(state.digits, state.givens)
+            val hint = HintEngine.findHint(board, state.difficulty)
+            val hintIndex = if (hint is sudoku.engine.HintResult.Found) hint.targetCells.firstOrNull() else null
             state.copy(
-                hintResult = HintEngine.findHint(board, state.difficulty),
+                hintResult = hint,
                 numberHighlightDigit = null,
                 hintsRemaining = maxOf(0, state.hintsRemaining - 1),
+                selectedIndex = hintIndex ?: state.selectedIndex,
             )
         }
         is GameIntent.TogglePause -> state.copy(
             isPaused = !state.isPaused,
             numberHighlightDigit = null,
         )
-        is GameIntent.TimerTick -> if (!state.isPaused && !state.isComplete && !state.isLoading)
+        is GameIntent.TimerTick -> if (!state.isPaused && !state.isComplete && !state.isGameOver && !state.isLoading)
             state.copy(timerSeconds = state.timerSeconds + 1)
         else state
         is GameIntent.GameCompleted -> state.copy(isComplete = true)
