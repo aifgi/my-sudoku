@@ -225,7 +225,7 @@ Focus: Confirm edge cases compile and key behavioral paths are covered.
 
 ---
 
-- [ ] V4 [VERIFY] Full local CI: engine tests + app build
+- [x] V4 [VERIFY] Full local CI: engine tests + app build
 
   - **Do**: Final local verification before VE
   - **Files**: none
