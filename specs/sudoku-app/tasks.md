@@ -1048,7 +1048,7 @@ created: 2026-05-26
 
 ---
 
-### 4.2 Create feature branch and PR
+### [x] 4.2 Create feature branch and PR
 
 - **Do**:
   1. Verify current branch is not `main`: `git branch --show-current`
