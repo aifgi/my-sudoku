@@ -199,7 +199,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
 
     // Game over dialog
     if (state.isGameOver) {
-        GameOverDialog(onNewGame = { onIntent(GameIntent.StartNewGame(state.difficulty)) })
+        GameOverDialog(mistakeCount = state.mistakeCount, onNewGame = { onIntent(GameIntent.StartNewGame(state.difficulty)) })
     }
 
     // New game confirmation dialog

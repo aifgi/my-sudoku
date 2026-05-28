@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import sudoku.app.ui.i18n.LocalStrings
 import sudoku.engine.HintResult
 
 @Composable
 fun HintBanner(hintResult: HintResult?) {
+    val strings = LocalStrings.current
     AnimatedVisibility(visible = hintResult != null) {
         Row(
             modifier = Modifier
@@ -27,8 +29,8 @@ fun HintBanner(hintResult: HintResult?) {
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = result.explanation)
                 }
-                is HintResult.NoHint -> Text(text = "No hint available")
-                is HintResult.NoHintForDifficulty -> Text(text = "No hint available for this difficulty level")
+                is HintResult.NoHint -> Text(text = strings.hintNoHint)
+                is HintResult.NoHintForDifficulty -> Text(text = strings.hintNoHintForDifficulty)
                 null -> {} // AnimatedVisibility handles this
             }
         }

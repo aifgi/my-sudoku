@@ -114,7 +114,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.8 [P] Replace hardcoded strings in `HintBanner.kt` and `GameOverDialog.kt`
+- [x] 1.8 [P] Replace hardcoded strings in `HintBanner.kt` and `GameOverDialog.kt`
   - **Do** (HintBanner):
     1. Add `import sudoku.app.ui.i18n.LocalStrings`
     2. Inside `HintBanner`, add `val strings = LocalStrings.current`
