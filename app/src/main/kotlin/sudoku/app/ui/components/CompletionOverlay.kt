@@ -45,7 +45,12 @@ fun CompletionOverlay(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = difficulty.name.lowercase().replaceFirstChar { it.uppercase() },
+                text = when (difficulty) {
+                    Difficulty.EASY -> strings.difficultyEasy
+                    Difficulty.MEDIUM -> strings.difficultyMedium
+                    Difficulty.HARD -> strings.difficultyHard
+                    Difficulty.EXPERT -> strings.difficultyExpert
+                },
                 style = MaterialTheme.typography.h6,
                 color = Color.White,
             )
