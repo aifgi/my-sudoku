@@ -10,7 +10,7 @@ class StringsCompletenessTest {
     }
 
     @Test
-    fun `EnglishStrings has non-blank values for all 23 String properties`() {
+    fun `EnglishStrings has non-blank values for all 28 String properties`() {
         val e = EnglishStrings
         assertNonBlank(e.appTitle, "appTitle")
         assertNonBlank(e.difficultyEasy, "difficultyEasy")
@@ -22,6 +22,11 @@ class StringsCompletenessTest {
         assertNonBlank(e.actionNewGame, "actionNewGame")
         assertNonBlank(e.hintNoHint, "hintNoHint")
         assertNonBlank(e.hintNoHintForDifficulty, "hintNoHintForDifficulty")
+        assertNonBlank(e.hintNakedSingle, "hintNakedSingle")
+        assertNonBlank(e.hintHiddenSingle, "hintHiddenSingle")
+        assertNonBlank(e.hintNakedPair, "hintNakedPair")
+        assertNonBlank(e.hintHiddenPair, "hintHiddenPair")
+        assertNonBlank(e.hintPointingPair, "hintPointingPair")
         assertNonBlank(e.pauseTitle, "pauseTitle")
         assertNonBlank(e.pauseResume, "pauseResume")
         assertNonBlank(e.completionTitle, "completionTitle")
@@ -40,7 +45,7 @@ class StringsCompletenessTest {
     }
 
     @Test
-    fun `RussianStrings has non-blank values for all 23 String properties`() {
+    fun `RussianStrings has non-blank values for all 28 String properties`() {
         val r = RussianStrings
         assertNonBlank(r.appTitle, "appTitle")
         assertNonBlank(r.difficultyEasy, "difficultyEasy")
@@ -52,6 +57,11 @@ class StringsCompletenessTest {
         assertNonBlank(r.actionNewGame, "actionNewGame")
         assertNonBlank(r.hintNoHint, "hintNoHint")
         assertNonBlank(r.hintNoHintForDifficulty, "hintNoHintForDifficulty")
+        assertNonBlank(r.hintNakedSingle, "hintNakedSingle")
+        assertNonBlank(r.hintHiddenSingle, "hintHiddenSingle")
+        assertNonBlank(r.hintNakedPair, "hintNakedPair")
+        assertNonBlank(r.hintHiddenPair, "hintHiddenPair")
+        assertNonBlank(r.hintPointingPair, "hintPointingPair")
         assertNonBlank(r.pauseTitle, "pauseTitle")
         assertNonBlank(r.pauseResume, "pauseResume")
         assertNonBlank(r.completionTitle, "completionTitle")

@@ -13,6 +13,11 @@ object RussianStrings : Strings {
 
     override val hintNoHint = "Подсказка недоступна"
     override val hintNoHintForDifficulty = "Подсказок нет для этого уровня сложности"
+    override val hintNakedSingle = "Открытый одиночка"
+    override val hintHiddenSingle = "Скрытый одиночка"
+    override val hintNakedPair = "Открытая пара"
+    override val hintHiddenPair = "Скрытая пара"
+    override val hintPointingPair = "Указывающая пара"
 
     override val pauseTitle = "Игра на паузе"
     override val pauseResume = "Продолжить"

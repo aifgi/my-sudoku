@@ -18,6 +18,11 @@ interface Strings {
     // Hint banner
     val hintNoHint: String
     val hintNoHintForDifficulty: String
+    val hintNakedSingle: String
+    val hintHiddenSingle: String
+    val hintNakedPair: String
+    val hintHiddenPair: String
+    val hintPointingPair: String
 
     // Pause overlay
     val pauseTitle: String

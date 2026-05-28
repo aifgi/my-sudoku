@@ -13,6 +13,11 @@ object EnglishStrings : Strings {
 
     override val hintNoHint = "No hint available"
     override val hintNoHintForDifficulty = "No hint available for this difficulty level"
+    override val hintNakedSingle = "Naked Single"
+    override val hintHiddenSingle = "Hidden Single"
+    override val hintNakedPair = "Naked Pair"
+    override val hintHiddenPair = "Hidden Pair"
+    override val hintPointingPair = "Pointing Pair"
 
     override val pauseTitle = "Game Paused"
     override val pauseResume = "Resume"

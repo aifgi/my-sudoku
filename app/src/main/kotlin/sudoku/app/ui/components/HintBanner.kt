@@ -25,7 +25,15 @@ fun HintBanner(hintResult: HintResult?) {
         ) {
             when (val result = hintResult) {
                 is HintResult.Found -> {
-                    Text(text = result.technique, fontWeight = FontWeight.Bold)
+                    val techniqueName = when (result.technique) {
+                        "Naked Single"   -> strings.hintNakedSingle
+                        "Hidden Single"  -> strings.hintHiddenSingle
+                        "Naked Pair"     -> strings.hintNakedPair
+                        "Hidden Pair"    -> strings.hintHiddenPair
+                        "Pointing Pair"  -> strings.hintPointingPair
+                        else             -> result.technique
+                    }
+                    Text(text = techniqueName, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = result.explanation)
                 }
