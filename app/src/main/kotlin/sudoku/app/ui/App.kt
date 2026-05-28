@@ -41,9 +41,16 @@ fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
         when {
             state.isLoading -> CircularProgressIndicator()
             state.digits.all { it == 0 } && !state.isComplete && state.undoStack.isEmpty() ->
-                HomeScreen(onDifficultySelected = { difficulty ->
-                    onIntent(GameIntent.StartNewGame(difficulty))
-                })
+                HomeScreen(
+                    onDifficultySelected = { difficulty ->
+                        onIntent(GameIntent.StartNewGame(difficulty))
+                    },
+                    currentLocale = locale,
+                    onLocaleChange = { newLocale ->
+                        locale = newLocale
+                        AppPreferences.saveLocale(newLocale)
+                    },
+                )
             else -> GameScreen(state = state, onIntent = onIntent)
         }
 

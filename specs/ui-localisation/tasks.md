@@ -69,7 +69,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.5 Update `HomeScreen.kt`: add locale params, flag toggle, use `LocalStrings.current`; wire call site in `App.kt`
+- [x] 1.5 Update `HomeScreen.kt`: add locale params, flag toggle, use `LocalStrings.current`; wire call site in `App.kt`
   - **Do**:
     1. Add imports: `sudoku.app.ui.i18n.AppLocale`, `sudoku.app.ui.i18n.LocalStrings`, `androidx.compose.ui.draw.alpha`, `androidx.compose.material.IconButton`
     2. Change signature to `fun HomeScreen(onDifficultySelected: (Difficulty) -> Unit, currentLocale: AppLocale, onLocaleChange: (AppLocale) -> Unit)`
