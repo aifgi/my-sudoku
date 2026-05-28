@@ -208,13 +208,13 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
     if (state.showNewGameConfirmation) {
         AlertDialog(
             onDismissRequest = { onIntent(GameIntent.CancelNewGame) },
-            title = { Text("New Game?") },
-            text = { Text("Start a new game? Your current progress will be lost.") },
+            title = { Text(strings.newGameTitle) },
+            text = { Text(strings.newGameMessage) },
             confirmButton = {
-                TextButton(onClick = { onIntent(GameIntent.ConfirmNewGame) }) { Text("Start") }
+                TextButton(onClick = { onIntent(GameIntent.ConfirmNewGame) }) { Text(strings.newGameConfirm) }
             },
             dismissButton = {
-                TextButton(onClick = { onIntent(GameIntent.CancelNewGame) }) { Text("Cancel") }
+                TextButton(onClick = { onIntent(GameIntent.CancelNewGame) }) { Text(strings.newGameCancel) }
             },
         )
     }

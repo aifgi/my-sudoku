@@ -150,7 +150,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.10 Replace hardcoded new-game dialog strings in `GameScreen.kt`
+- [x] 1.10 Replace hardcoded new-game dialog strings in `GameScreen.kt`
   - **Do**:
     1. Replace `AlertDialog` title `"New Game?"` with `strings.newGameTitle`, text `"Start a new game?..."` with `strings.newGameMessage`, confirm `"Start"` with `strings.newGameConfirm`, dismiss `"Cancel"` with `strings.newGameCancel`
   - **Files**: `app/src/main/kotlin/sudoku/app/ui/GameScreen.kt`
