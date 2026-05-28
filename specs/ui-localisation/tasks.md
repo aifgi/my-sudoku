@@ -222,7 +222,7 @@ Focus: Unit tests for `LocaleResolver`, `AppPreferences`, and `StringsCompletene
 
 ---
 
-- [ ] 3.1 Create `LocaleResolverTest` — unit tests for startup locale resolution
+- [x] 3.1 Create `LocaleResolverTest` — unit tests for startup locale resolution
   - **Do**:
     1. Create directory `app/src/test/kotlin/sudoku/app/ui/i18n/` if it doesn't exist
     2. Create `app/src/test/kotlin/sudoku/app/ui/i18n/LocaleResolverTest.kt` with a `LocaleResolverTest` class using JUnit 4 (check existing test deps) or JUnit 5
