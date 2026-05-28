@@ -42,6 +42,14 @@ jobs:
       - name: Build and test
         run: ./gradlew :engine:test :app:${{ matrix.task }}
 
+      - name: Upload jpackage logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jpackage-logs-${{ matrix.os }}
+          path: app/build/compose/logs/
+          if-no-files-found: ignore
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
