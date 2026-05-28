@@ -18,6 +18,18 @@ object RussianStrings : Strings {
     override val hintNakedPair = "Открытая пара"
     override val hintHiddenPair = "Скрытая пара"
     override val hintPointingPair = "Указывающая пара"
+    override val hintExplainNakedSingle: (String, Int) -> String =
+        { cell, digit -> "Открытый одиночка в $cell: только $digit подходит" }
+    override val hintExplainHiddenSingle: (String, Int) -> String =
+        { cell, digit -> "Скрытый одиночка в $cell: цифра $digit может стоять только здесь" }
+    override val hintExplainNakedPair: (String, String, Int, Int) -> String =
+        { cell1, cell2, d1, d2 -> "Открытая пара в $cell1 и $cell2: цифры $d1 и $d2 заперты здесь" }
+    override val hintExplainHiddenPair: (String, String, Int, Int) -> String =
+        { cell1, cell2, d1, d2 -> "Скрытая пара в $cell1 и $cell2: цифры $d1 и $d2 заперты в этих клетках" }
+    override val hintExplainPointingPairRow: (Int, Int, Int) -> String =
+        { digit, box, row -> "Указывающая пара: цифра $digit в блоке $box ограничена строкой $row, исключая её из других клеток строки" }
+    override val hintExplainPointingPairCol: (Int, Int, Int) -> String =
+        { digit, box, col -> "Указывающая пара: цифра $digit в блоке $box ограничена столбцом $col, исключая её из других клеток столбца" }
 
     override val pauseTitle = "Игра на паузе"
     override val pauseResume = "Продолжить"

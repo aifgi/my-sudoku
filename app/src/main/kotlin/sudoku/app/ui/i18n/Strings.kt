@@ -23,6 +23,12 @@ interface Strings {
     val hintNakedPair: String
     val hintHiddenPair: String
     val hintPointingPair: String
+    val hintExplainNakedSingle: (cell: String, digit: Int) -> String
+    val hintExplainHiddenSingle: (cell: String, digit: Int) -> String
+    val hintExplainNakedPair: (cell1: String, cell2: String, d1: Int, d2: Int) -> String
+    val hintExplainHiddenPair: (cell1: String, cell2: String, d1: Int, d2: Int) -> String
+    val hintExplainPointingPairRow: (digit: Int, box: Int, row: Int) -> String
+    val hintExplainPointingPairCol: (digit: Int, box: Int, col: Int) -> String
 
     // Pause overlay
     val pauseTitle: String

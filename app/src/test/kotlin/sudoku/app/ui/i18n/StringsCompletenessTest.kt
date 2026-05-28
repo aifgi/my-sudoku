@@ -80,6 +80,28 @@ class StringsCompletenessTest {
     }
 
     @Test
+    fun `EnglishStrings hint explanation lambdas interpolate correctly`() {
+        val e = EnglishStrings
+        assertTrue(e.hintExplainNakedSingle("R1C1", 5).contains("R1C1"))
+        assertTrue(e.hintExplainHiddenSingle("R2C3", 7).contains("7"))
+        assertTrue(e.hintExplainNakedPair("R1C1", "R1C2", 3, 7).contains("3"))
+        assertTrue(e.hintExplainHiddenPair("R1C1", "R1C2", 3, 7).contains("R1C2"))
+        assertTrue(e.hintExplainPointingPairRow(5, 2, 3).contains("5"))
+        assertTrue(e.hintExplainPointingPairCol(5, 2, 3).contains("3"))
+    }
+
+    @Test
+    fun `RussianStrings hint explanation lambdas interpolate correctly`() {
+        val r = RussianStrings
+        assertTrue(r.hintExplainNakedSingle("R1C1", 5).contains("R1C1"))
+        assertTrue(r.hintExplainHiddenSingle("R2C3", 7).contains("7"))
+        assertTrue(r.hintExplainNakedPair("R1C1", "R1C2", 3, 7).contains("3"))
+        assertTrue(r.hintExplainHiddenPair("R1C1", "R1C2", 3, 7).contains("R1C2"))
+        assertTrue(r.hintExplainPointingPairRow(5, 2, 3).contains("5"))
+        assertTrue(r.hintExplainPointingPairCol(5, 2, 3).contains("3"))
+    }
+
+    @Test
     fun `EnglishStrings gameOverMistakes interpolates the count`() {
         val result = EnglishStrings.gameOverMistakes(3)
         assertTrue(result.contains("3"), "Expected gameOverMistakes(3) to contain '3', got: '$result'")

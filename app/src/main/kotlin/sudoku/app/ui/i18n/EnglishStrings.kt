@@ -18,6 +18,18 @@ object EnglishStrings : Strings {
     override val hintNakedPair = "Naked Pair"
     override val hintHiddenPair = "Hidden Pair"
     override val hintPointingPair = "Pointing Pair"
+    override val hintExplainNakedSingle: (String, Int) -> String =
+        { cell, digit -> "Naked Single at $cell: only $digit fits" }
+    override val hintExplainHiddenSingle: (String, Int) -> String =
+        { cell, digit -> "Hidden Single at $cell: digit $digit can only go here in this unit" }
+    override val hintExplainNakedPair: (String, String, Int, Int) -> String =
+        { cell1, cell2, d1, d2 -> "Naked Pair at $cell1 and $cell2: digits $d1 and $d2 are confined here" }
+    override val hintExplainHiddenPair: (String, String, Int, Int) -> String =
+        { cell1, cell2, d1, d2 -> "Hidden Pair at $cell1 and $cell2: digits $d1 and $d2 are confined to these cells" }
+    override val hintExplainPointingPairRow: (Int, Int, Int) -> String =
+        { digit, box, row -> "Pointing Pair: digit $digit in box $box is confined to row $row, eliminating it from other row cells" }
+    override val hintExplainPointingPairCol: (Int, Int, Int) -> String =
+        { digit, box, col -> "Pointing Pair: digit $digit in box $box is confined to column $col, eliminating it from other column cells" }
 
     override val pauseTitle = "Game Paused"
     override val pauseResume = "Resume"
