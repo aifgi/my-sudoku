@@ -1,3 +1,9 @@
+import java.awt.BasicStroke
+import java.awt.Color
+import java.awt.RenderingHints
+import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
+
 plugins {
     kotlin("jvm") version "2.0.21"
     id("org.jetbrains.compose") version "1.7.3"
@@ -23,6 +29,82 @@ tasks.test {
     useJUnitPlatform()
 }
 
+fun drawIcon(size: Int): BufferedImage {
+    val image = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
+    val g = image.createGraphics()
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+    g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
+
+    val radius = (size * 0.19).toInt()
+    g.setColor(Color(0x3D, 0x5A, 0x9A))
+    g.fillRoundRect(0, 0, size, size, radius, radius)
+
+    val padding = (size * 0.11).toInt()
+    val gridSize = size - 2 * padding
+    val cellSize = gridSize / 9
+
+    // Thin cell lines
+    g.setColor(Color(0xFF, 0xFF, 0xFF, 90))
+    g.setStroke(BasicStroke((size * 0.004f).coerceAtLeast(1f)))
+    for (i in 1..8) {
+        if (i % 3 != 0) {
+            val pos = padding + i * cellSize
+            g.drawLine(pos, padding, pos, padding + gridSize)
+            g.drawLine(padding, pos, padding + gridSize, pos)
+        }
+    }
+
+    // Thick 3x3 box lines
+    g.setColor(Color.WHITE)
+    g.setStroke(BasicStroke((size * 0.010f).coerceAtLeast(1f)))
+    for (i in 0..3) {
+        val pos = padding + i * 3 * cellSize
+        g.drawLine(pos, padding, pos, padding + gridSize)
+        g.drawLine(padding, pos, padding + gridSize, pos)
+    }
+
+    g.dispose()
+    return image
+}
+
+val iconsDir = layout.projectDirectory.dir("src/main/icons")
+
+val generateIconPng by tasks.registering {
+    val pngFile = iconsDir.file("icon.png")
+    outputs.file(pngFile)
+    doLast {
+        iconsDir.asFile.mkdirs()
+        ImageIO.write(drawIcon(1024), "PNG", pngFile.asFile)
+        logger.lifecycle("Generated icon PNG: ${pngFile.asFile.absolutePath}")
+    }
+}
+
+val generateIconIcns by tasks.registering {
+    dependsOn(generateIconPng)
+    val icnsFile = iconsDir.file("icon.icns")
+    outputs.file(icnsFile)
+    onlyIf { org.gradle.internal.os.OperatingSystem.current().isMacOsX }
+    doLast {
+        val iconsetDir = iconsDir.dir("icon.iconset").asFile
+        iconsetDir.deleteRecursively()
+        iconsetDir.mkdirs()
+
+        val sizes = listOf(16, 32, 64, 128, 256, 512, 1024)
+        for (s in sizes) {
+            ImageIO.write(drawIcon(s), "PNG", File(iconsetDir, "icon_${s}x${s}.png"))
+            if (s <= 512) {
+                ImageIO.write(drawIcon(s * 2), "PNG", File(iconsetDir, "icon_${s}x${s}@2x.png"))
+            }
+        }
+
+        exec {
+            commandLine("iconutil", "-c", "icns", "-o", icnsFile.asFile.absolutePath, iconsetDir.absolutePath)
+        }
+        iconsetDir.deleteRecursively()
+        logger.lifecycle("Generated icon ICNS: ${icnsFile.asFile.absolutePath}")
+    }
+}
+
 compose.desktop {
     application {
         mainClass = "sudoku.app.MainKt"
@@ -41,10 +123,21 @@ compose.desktop {
             }
             macOS {
                 bundleID = "com.sudoku.app"
+                iconFile.set(iconsDir.file("icon.icns"))
             }
             linux {
                 packageName = "sudoku"
+                iconFile.set(iconsDir.file("icon.png"))
             }
         }
+    }
+}
+
+afterEvaluate {
+    listOf("packageDmg", "createDistributable", "runDistributable").forEach { name ->
+        tasks.findByName(name)?.dependsOn(generateIconIcns)
+    }
+    listOf("packageMsi", "packageDeb").forEach { name ->
+        tasks.findByName(name)?.dependsOn(generateIconPng)
     }
 }
