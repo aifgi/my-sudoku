@@ -112,7 +112,8 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
             modifier = Modifier
                 .weight(0.4f)
                 .fillMaxHeight()
-                .padding(start = 4.dp, end = 16.dp, top = 16.dp, bottom = 16.dp),
+                .padding(start = 4.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)
+                .focusProperties { canFocus = false },
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             // Stats row: Mistakes | Time + Pause
