@@ -72,4 +72,4 @@ When adding a new technique, implement it in both places. The `Grader` version e
 
 ### Slow generation tests
 
-`GeneratorTest` uses `@Disabled` for EXPERT-level generation tests that may exceed CI time limits. Follow this pattern for any new slow generation tests.
+`GeneratorTest` uses `@Disabled` for EXPERT-level generation tests that may exceed CI time limits. Follow this pattern for any new slow generation tests. And never run gradle builds without timeout.
