@@ -7,7 +7,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.1 Create i18n package: `AppLocale` enum + `Strings` interface + `LocalStrings`
+- [x] 1.1 Create i18n package: `AppLocale` enum + `Strings` interface + `LocalStrings`
   - **Do**:
     1. Create `app/src/main/kotlin/sudoku/app/ui/i18n/AppLocale.kt` — `enum class AppLocale { ENGLISH, RUSSIAN }`
     2. Create `app/src/main/kotlin/sudoku/app/ui/i18n/Strings.kt` — declare `interface Strings` with all 24 members (5 app/home, 3 game labels, 2 hint, 2 pause, 3 completion, 3 game-over, 4 quit dialog, 4 new-game dialog; `gameOverMistakes: (Int) -> String`), then `val LocalStrings = compositionLocalOf<Strings> { EnglishStrings }`
@@ -333,10 +333,10 @@ Focus: Unit tests for `LocaleResolver`, `AppPreferences`, and `StringsCompletene
 - All 7 composable files (App, HomeScreen, GameScreen, PauseOverlay, CompletionOverlay, GameOverDialog, HintBanner) use LocalStrings.current
 
 ## Test plan
-- [ ] ./gradlew build passes with zero errors
-- [ ] ./gradlew test passes — LocaleResolverTest (7 cases), AppPreferencesTest (4 cases), StringsCompletenessTest pass
-- [ ] AC-5.3: no hardcoded English strings remain in composable files
-- [ ] AC-2.4: flag toggle absent from game-screen files (verified by grep in V6)
+- ./gradlew build passes with zero errors
+- ./gradlew test passes — LocaleResolverTest (7 cases), AppPreferencesTest (4 cases), StringsCompletenessTest pass
+- AC-5.3: no hardcoded English strings remain in composable files
+- AC-2.4: flag toggle absent from game-screen files (verified by grep in V6)
 EOF
 )"`
   - **Verify**: `gh pr view --json url -q .url`
