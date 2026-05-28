@@ -15,21 +15,13 @@ import sudoku.app.state.GameIntent
 import sudoku.app.state.GameViewModel
 import sudoku.app.ui.i18n.AppLocale
 import sudoku.app.ui.i18n.AppPreferences
-import sudoku.app.ui.i18n.EnglishStrings
 import sudoku.app.ui.i18n.LocalStrings
-import sudoku.app.ui.i18n.RussianStrings
-import sudoku.app.ui.i18n.Strings
+import sudoku.app.ui.i18n.resolveLocale
+import sudoku.app.ui.i18n.toStrings
 import java.util.Locale
 
-private fun resolveInitialLocale(): AppLocale {
-    AppPreferences.loadLocale()?.let { return it }
-    return if (Locale.getDefault().language.startsWith("ru")) AppLocale.RUSSIAN else AppLocale.ENGLISH
-}
-
-fun AppLocale.toStrings(): Strings = when (this) {
-    AppLocale.ENGLISH -> EnglishStrings
-    AppLocale.RUSSIAN -> RussianStrings
-}
+private fun resolveInitialLocale(): AppLocale =
+    resolveLocale(AppPreferences.loadLocale(), Locale.getDefault().language)
 
 @Composable
 fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {

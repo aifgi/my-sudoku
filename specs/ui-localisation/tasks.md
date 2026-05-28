@@ -189,7 +189,7 @@ Focus: Co-locate locale logic, extract pure `resolveLocale` function for testabi
 
 ---
 
-- [ ] 2.1 Refactor `AppPreferences` error handling + extract `resolveLocale` pure function + co-locate locale logic
+- [x] 2.1 Refactor `AppPreferences` error handling + extract `resolveLocale` pure function + co-locate locale logic
   - **Do**:
     1. In `app/src/main/kotlin/sudoku/app/ui/i18n/LocaleResolver.kt` (create new file), add a pure top-level function `fun resolveLocale(savedLocale: AppLocale?, systemLanguage: String): AppLocale` — returns `savedLocale` if non-null, else `if (systemLanguage.startsWith("ru")) AppLocale.RUSSIAN else AppLocale.ENGLISH`
     2. Update `resolveInitialLocale()` in `App.kt` to delegate: `return resolveLocale(AppPreferences.loadLocale(), Locale.getDefault().language)`
