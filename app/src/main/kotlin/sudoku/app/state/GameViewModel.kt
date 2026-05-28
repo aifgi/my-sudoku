@@ -11,6 +11,7 @@ import sudoku.engine.computeConflicts
 
 class GameViewModel(
     private val coroutineScope: CoroutineScope,
+    private val debugMode: Boolean = false,
 ) {
     private val _state = MutableStateFlow(GameState.Initial)
     val state: StateFlow<GameState> = _state.asStateFlow()
@@ -55,7 +56,7 @@ class GameViewModel(
                 isLoading = false,
                 pendingDifficulty = null,
                 mistakeCount = 0,
-                hintsRemaining = 3,
+                hintsRemaining = if (debugMode) 99 else 3,
                 isGameOver = false,
             )
         }

@@ -14,7 +14,7 @@ import sudoku.app.ui.App
 
 fun main() = application {
     val coroutineScope = rememberCoroutineScope()
-    val viewModel = remember { GameViewModel(coroutineScope) }
+    val viewModel = remember { GameViewModel(coroutineScope, debugMode = System.getProperty("debug") == "true") }
     val state by viewModel.state.collectAsState()
 
     Window(
