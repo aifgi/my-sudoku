@@ -6,21 +6,29 @@ on:
       - 'release-*'
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/release-}" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: prepare
     uses: ./.github/workflows/_build.yml
+    with:
+      package-version: ${{ needs.prepare.outputs.version }}
 
   release:
-    needs: build
+    needs: [prepare, build]
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
 
     steps:
-      - name: Extract version from tag
-        id: version
-        run: echo "version=${GITHUB_REF#refs/tags/release-}" >> "$GITHUB_OUTPUT"
-
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
@@ -30,5 +38,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: v${{ steps.version.outputs.version }}
+          name: v${{ needs.prepare.outputs.version }}
           files: artifacts/**/*

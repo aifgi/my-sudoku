@@ -2,6 +2,10 @@ name: Build App
 
 on:
   workflow_call:
+    inputs:
+      package-version:
+        type: string
+        default: ''
 
 jobs:
   build:
@@ -38,7 +42,9 @@ jobs:
         run: choco install wixtoolset -y
 
       - name: Build and test
-        run: ./gradlew :engine:test :app:${{ matrix.task }}
+        run: >
+          ./gradlew :engine:test :app:${{ matrix.task }}
+          ${{ inputs.package-version != '' && format('-PpackageVersion={0}', inputs.package-version) || '' }}
 
       - name: Upload jpackage logs on failure
         if: failure()
