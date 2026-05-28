@@ -43,6 +43,10 @@ data class GameState(
     val hintsRemaining: Int,
     val isGameOver: Boolean,
 ) {
+    /** True while any AlertDialog is on screen; used to re-request keyboard focus after dismissal. */
+    val hasAnyDialogVisible: Boolean
+        get() = showQuitConfirmation || showNewGameConfirmation || isGameOver
+
     companion object {
         val Initial = GameState(
             digits = IntArray(81),

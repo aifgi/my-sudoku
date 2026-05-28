@@ -207,4 +207,82 @@ class GameViewModelTest {
         assertTrue(result.isGameOver, "isGameOver should be true")
         assertFalse(result.isComplete, "isComplete should remain false when game is over by mistake limit")
     }
+
+    // ── Bug #9 fix: checkCompletion must not call dispatch() inside _state.update ──
+
+    @Test
+    fun `entering last correct digit sets isComplete to true`() {
+        val scope = TestScope(StandardTestDispatcher())
+        val vm = GameViewModel(scope)
+
+        val stateField = GameViewModel::class.java.getDeclaredField("_state")
+        stateField.isAccessible = true
+        val stateFlow = stateField.get(vm) as kotlinx.coroutines.flow.MutableStateFlow<GameState>
+        val nearComplete = buildNearCompleteState().copy(selectedIndex = 42)
+        stateFlow.value = nearComplete
+
+        vm.dispatch(GameIntent.EnterDigit(7)) // correct digit for index 42
+
+        val result = vm.state.value
+        assertTrue(result.isComplete, "isComplete should be true after filling last cell correctly")
+        assertFalse(result.isGameOver, "isGameOver should remain false on completion")
+        assertEquals(7, result.digits[42], "digit at index 42 should be 7")
+    }
+
+    @Test
+    fun `puzzle completion state is consistent with no repeated completion`() {
+        // Guards against the previous CAS-retry bug where checkCompletion dispatching
+        // inside _state.update could cause applyEnterDigit to run twice, producing
+        // redundant or inconsistent intermediate states.
+        val scope = TestScope(StandardTestDispatcher())
+        val vm = GameViewModel(scope)
+
+        val stateField = GameViewModel::class.java.getDeclaredField("_state")
+        stateField.isAccessible = true
+        val stateFlow = stateField.get(vm) as kotlinx.coroutines.flow.MutableStateFlow<GameState>
+        val nearComplete = buildNearCompleteState().copy(selectedIndex = 42)
+        stateFlow.value = nearComplete
+
+        vm.dispatch(GameIntent.EnterDigit(7))
+
+        val result = vm.state.value
+        assertTrue(result.isComplete, "isComplete should be true")
+        // If CAS-retry caused a double-run, mistakeCount or conflictIndices could diverge.
+        assertEquals(0, result.mistakeCount, "mistakeCount should be unchanged")
+        assertTrue(result.conflictIndices.isEmpty(), "no conflicts on a correct completion")
+        assertTrue(result.digits.none { it == 0 }, "no empty cells remain")
+    }
+
+    // ── Bug #9 fix: hasAnyDialogVisible — used to re-request keyboard focus ──
+
+    @Test
+    fun `hasAnyDialogVisible is false when no dialogs are showing`() {
+        assertFalse(GameState.Initial.hasAnyDialogVisible)
+    }
+
+    @Test
+    fun `hasAnyDialogVisible is true when isGameOver`() {
+        assertTrue(GameState.Initial.copy(isGameOver = true).hasAnyDialogVisible)
+    }
+
+    @Test
+    fun `hasAnyDialogVisible is true when showNewGameConfirmation`() {
+        assertTrue(GameState.Initial.copy(showNewGameConfirmation = true).hasAnyDialogVisible)
+    }
+
+    @Test
+    fun `hasAnyDialogVisible is true when showQuitConfirmation`() {
+        assertTrue(GameState.Initial.copy(showQuitConfirmation = true).hasAnyDialogVisible)
+    }
+
+    @Test
+    fun `hasAnyDialogVisible becomes false after all dialogs are dismissed`() {
+        val state = GameState.Initial.copy(
+            isGameOver = true,
+            showNewGameConfirmation = false,
+            showQuitConfirmation = false,
+        )
+        assertTrue(state.hasAnyDialogVisible)
+        assertFalse(state.copy(isGameOver = false).hasAnyDialogVisible)
+    }
 }

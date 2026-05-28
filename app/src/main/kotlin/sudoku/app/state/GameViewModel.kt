@@ -21,7 +21,8 @@ class GameViewModel(
     fun dispatch(intent: GameIntent) {
         _state.update { current -> reduce(current, intent) }
         handleSideEffects(intent)
-        if (_state.value.isGameOver) timerJob?.cancel()
+        val s = _state.value
+        if (s.isGameOver || s.isComplete) timerJob?.cancel()
     }
 
     private fun reduce(state: GameState, intent: GameIntent): GameState = when (intent) {
@@ -170,10 +171,11 @@ class GameViewModel(
     }
 
     private fun checkCompletion(state: GameState): GameState {
-        if (state.digits.none { it == 0 } && state.conflictIndices.isEmpty()) {
-            dispatch(GameIntent.GameCompleted)
+        return if (state.digits.none { it == 0 } && state.conflictIndices.isEmpty()) {
+            state.copy(isComplete = true)
+        } else {
+            state
         }
-        return state
     }
 
     internal fun computeConflicts(digits: IntArray, solution: IntArray = IntArray(81)): Set<Int> {
@@ -189,7 +191,6 @@ class GameViewModel(
             is GameIntent.StartNewGame -> launchGeneration(intent.difficulty)
             is GameIntent.TogglePause -> syncTimer()
             is GameIntent.PuzzleGenerated -> startTimer()
-            is GameIntent.GameCompleted -> timerJob?.cancel()
             else -> {}
         }
     }
