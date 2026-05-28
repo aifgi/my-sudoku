@@ -244,7 +244,7 @@ Focus: Unit tests for `LocaleResolver`, `AppPreferences`, and `StringsCompletene
 
 ---
 
-- [ ] 3.2 Create `AppPreferencesTest` — unit tests for prefs load/save/fallback
+- [x] 3.2 Create `AppPreferencesTest` — unit tests for prefs load/save/fallback
   - **Do**:
     1. Create `app/src/test/kotlin/sudoku/app/ui/i18n/AppPreferencesTest.kt`
     2. Use a unique Preferences node per test (e.g., `Preferences.userRoot().node("sudoku/test-${UUID.randomUUID()}")`) to avoid cross-test pollution; or call `prefs.removeNode()` in `@After`. Since `AppPreferences` is an `object` with a fixed node, consider using a `@Before` that clears the node's `locale` key via reflection or by adding a `clearForTest()` internal method
