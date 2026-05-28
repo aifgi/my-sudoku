@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
 plugins {
-    kotlin("jvm") version "2.0.21"
-    id("org.jetbrains.compose") version "1.7.3"
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
+    kotlin("jvm") version "2.3.21"
+    id("org.jetbrains.compose") version "1.11.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.21"
 }
 
 kotlin {
@@ -17,12 +17,12 @@ kotlin {
 dependencies {
     implementation(project(":engine"))
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.14.4")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 }
 
 tasks.test {
@@ -97,9 +97,11 @@ val generateIconIcns by tasks.registering {
             }
         }
 
-        exec {
-            commandLine("iconutil", "-c", "icns", "-o", icnsFile.asFile.absolutePath, iconsetDir.absolutePath)
-        }
+        val exitCode = ProcessBuilder("iconutil", "-c", "icns", "-o", icnsFile.asFile.absolutePath, iconsetDir.absolutePath)
+            .inheritIO()
+            .start()
+            .waitFor()
+        require(exitCode == 0) { "iconutil failed with exit code $exitCode" }
         iconsetDir.deleteRecursively()
         logger.lifecycle("Generated icon ICNS: ${icnsFile.asFile.absolutePath}")
     }
