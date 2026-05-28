@@ -262,7 +262,7 @@ Focus: Unit tests for `LocaleResolver`, `AppPreferences`, and `StringsCompletene
 
 ---
 
-- [ ] 3.3 Create `StringsCompletenessTest` — verify both impls have non-blank values
+- [x] 3.3 Create `StringsCompletenessTest` — verify both impls have non-blank values
   - **Do**:
     1. Create `app/src/test/kotlin/sudoku/app/ui/i18n/StringsCompletenessTest.kt`
     2. Test cases using direct property access (no reflection needed since interface is known):
