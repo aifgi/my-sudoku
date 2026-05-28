@@ -95,7 +95,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.7 [P] Replace hardcoded strings in `PauseOverlay.kt` and `CompletionOverlay.kt`
+- [x] 1.7 [P] Replace hardcoded strings in `PauseOverlay.kt` and `CompletionOverlay.kt`
   - **Do** (PauseOverlay):
     1. Add `import sudoku.app.ui.i18n.LocalStrings`
     2. Inside `PauseOverlay`, add `val strings = LocalStrings.current`

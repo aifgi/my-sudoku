@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import sudoku.app.ui.i18n.LocalStrings
 
 @Composable
 fun PauseOverlay(onResume: () -> Unit) {
+    val strings = LocalStrings.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -23,10 +25,10 @@ fun PauseOverlay(onResume: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Game Paused", style = MaterialTheme.typography.h5)
+            Text(text = strings.pauseTitle, style = MaterialTheme.typography.h5)
             Spacer(modifier = Modifier.height(24.dp))
             Button(onClick = onResume) {
-                Text("Resume")
+                Text(strings.pauseResume)
             }
         }
     }
