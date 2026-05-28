@@ -21,6 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+private val buttonShape = RoundedCornerShape(8.dp)
+private val digitLabels = Array(10) { it.toString() }
+private val disabledTextColor = Color(0xFF999999)
+
 @Composable
 fun NumberPad(
     onDigit: (Int) -> Unit,
@@ -56,14 +60,13 @@ private fun NumberButton(
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val shape = RoundedCornerShape(8.dp)
     Surface(
         modifier = modifier
             .aspectRatio(1f)
-            .clip(shape)
+            .clip(buttonShape)
             .clickable(enabled = enabled, onClick = onClick),
         color = if (enabled) AppColors.NumBtnBg else AppColors.NumBtnDis,
-        shape = shape,
+        shape = buttonShape,
         elevation = 0.dp,
     ) {
         Box(
@@ -71,8 +74,8 @@ private fun NumberButton(
             modifier = Modifier.padding(4.dp),
         ) {
             Text(
-                text = digit.toString(),
-                color = if (enabled) AppColors.GivenDigit else Color(0xFF999999),
+                text = digitLabels[digit],
+                color = if (enabled) AppColors.GivenDigit else disabledTextColor,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
             )
