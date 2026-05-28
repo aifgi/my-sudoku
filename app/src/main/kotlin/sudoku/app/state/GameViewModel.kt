@@ -196,12 +196,15 @@ class GameViewModel(
         }
     }
 
-    private fun launchGeneration(difficulty: sudoku.engine.Difficulty) {
+    private fun launchGeneration(difficulty: sudoku.engine.PuzzleDifficulty) {
         generationJob?.cancel()
         generationJob = coroutineScope.launch {
             try {
                 val board = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-                    sudoku.engine.Generator.generate(difficulty)
+                    when (difficulty) {
+                        is sudoku.engine.PuzzleDifficulty.Technique -> sudoku.engine.Generator.generate(difficulty.grade)
+                        is sudoku.engine.PuzzleDifficulty.Given -> sudoku.engine.Generator.generateByGivenCount(difficulty.grade)
+                    }
                 }
                 dispatch(GameIntent.PuzzleGenerated(board))
             } catch (e: kotlinx.coroutines.CancellationException) {

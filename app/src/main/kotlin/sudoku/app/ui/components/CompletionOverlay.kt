@@ -19,10 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import sudoku.app.ui.i18n.LocalStrings
 import sudoku.engine.Difficulty
+import sudoku.engine.GivenGrade
+import sudoku.engine.PuzzleDifficulty
 
 @Composable
 fun CompletionOverlay(
-    difficulty: Difficulty,
+    difficulty: PuzzleDifficulty,
     timerSeconds: Long,
     onNewGame: () -> Unit,
     onBackToHome: () -> Unit,
@@ -46,10 +48,18 @@ fun CompletionOverlay(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = when (difficulty) {
-                    Difficulty.EASY -> strings.difficultyEasy
-                    Difficulty.MEDIUM -> strings.difficultyMedium
-                    Difficulty.HARD -> strings.difficultyHard
-                    Difficulty.EXPERT -> strings.difficultyExpert
+                    is PuzzleDifficulty.Technique -> when (difficulty.grade) {
+                        Difficulty.EASY -> strings.difficultyEasy
+                        Difficulty.MEDIUM -> strings.difficultyMedium
+                        Difficulty.HARD -> strings.difficultyHard
+                        Difficulty.EXPERT -> strings.difficultyExpert
+                    }
+                    is PuzzleDifficulty.Given -> when (difficulty.grade) {
+                        GivenGrade.EASY -> strings.difficultyEasy
+                        GivenGrade.MEDIUM -> strings.difficultyMedium
+                        GivenGrade.HARD -> strings.difficultyHard
+                        GivenGrade.EXPERT -> strings.difficultyExpert
+                    }
                 },
                 style = MaterialTheme.typography.h6,
                 color = Color.White,

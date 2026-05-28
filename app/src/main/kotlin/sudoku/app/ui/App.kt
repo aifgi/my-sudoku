@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import sudoku.app.state.GameIntent
 import sudoku.app.state.GameViewModel
+import sudoku.engine.PuzzleDifficulty
 import sudoku.app.ui.i18n.AppLocale
 import sudoku.app.ui.i18n.AppPreferences
 import sudoku.app.ui.i18n.LocalStrings
@@ -35,7 +36,7 @@ fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
             state.digits.all { it == 0 } && !state.isComplete && state.undoStack.isEmpty() ->
                 HomeScreen(
                     onDifficultySelected = { difficulty ->
-                        onIntent(GameIntent.StartNewGame(difficulty))
+                        onIntent(GameIntent.StartNewGame(PuzzleDifficulty.Technique(difficulty)))
                     },
                     currentLocale = locale,
                     onLocaleChange = { newLocale ->

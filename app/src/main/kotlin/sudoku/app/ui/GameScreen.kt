@@ -59,6 +59,7 @@ import sudoku.app.ui.components.PauseOverlay
 import sudoku.app.ui.components.SudokuBoard
 import sudoku.app.ui.components.formatTime
 import sudoku.engine.Difficulty
+import sudoku.engine.PuzzleDifficulty
 
 @Composable
 fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
@@ -103,7 +104,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
                     difficulty = state.difficulty,
                     timerSeconds = state.timerSeconds,
                     onNewGame = { onIntent(GameIntent.StartNewGame(state.difficulty)) },
-                    onBackToHome = { onIntent(GameIntent.StartNewGame(Difficulty.EASY)) },
+                    onBackToHome = { onIntent(GameIntent.StartNewGame(PuzzleDifficulty.Technique(Difficulty.EASY))) },
                 )
             }
         }

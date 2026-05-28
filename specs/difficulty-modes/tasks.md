@@ -105,7 +105,7 @@ Steps 7–13. Tasks in this phase depend on Phase 1 (PuzzleDifficulty sealed cla
 
 ---
 
-- [ ] 3.1 [P] Update `GameState` and `GameIntent` to use `PuzzleDifficulty`
+- [x] 3.1 [P] Update `GameState` and `GameIntent` to use `PuzzleDifficulty`
   - **Do**:
     1. In `GameState.kt`, change field types: `difficulty: PuzzleDifficulty`, `pendingDifficulty: PuzzleDifficulty?`, `newGameTargetDifficulty: PuzzleDifficulty?`
     2. Update `GameState.Initial` companion: `difficulty = PuzzleDifficulty.Technique(Difficulty.EASY)`, `pendingDifficulty = null`, `newGameTargetDifficulty = null`

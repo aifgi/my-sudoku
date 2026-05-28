@@ -2,6 +2,7 @@ package sudoku.app.state
 
 import sudoku.engine.Difficulty
 import sudoku.engine.HintResult
+import sudoku.engine.PuzzleDifficulty
 
 data class GameState(
     // Board data
@@ -25,15 +26,15 @@ data class GameState(
 
     // Game lifecycle
     val isComplete: Boolean,
-    val difficulty: Difficulty,
+    val difficulty: PuzzleDifficulty,
 
     // Loading
     val isLoading: Boolean,
-    val pendingDifficulty: Difficulty?,
+    val pendingDifficulty: PuzzleDifficulty?,
 
     // New game confirmation dialog
     val showNewGameConfirmation: Boolean,
-    val newGameTargetDifficulty: Difficulty?,
+    val newGameTargetDifficulty: PuzzleDifficulty?,
 
     // Quit confirmation dialog
     val showQuitConfirmation: Boolean,
@@ -61,7 +62,7 @@ data class GameState(
             timerSeconds = 0L,
             isPaused = false,
             isComplete = false,
-            difficulty = Difficulty.EASY,
+            difficulty = PuzzleDifficulty.Technique(Difficulty.EASY),
             isLoading = false,
             pendingDifficulty = null,
             showNewGameConfirmation = false,

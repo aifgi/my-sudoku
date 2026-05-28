@@ -44,6 +44,8 @@ fun HintBanner(hintResult: HintResult?) {
                             strings.hintExplainPointingPairRow(data.digit, data.box, data.row)
                         is HintExplanationData.PointingPairCol ->
                             strings.hintExplainPointingPairCol(data.digit, data.box, data.col)
+                        is HintExplanationData.Triple -> result.explanation
+                        is HintExplanationData.Swordfish -> result.explanation
                         null -> result.explanation
                     }
                     Column {
