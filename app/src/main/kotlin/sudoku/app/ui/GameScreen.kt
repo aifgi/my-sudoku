@@ -64,6 +64,11 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
     val strings = LocalStrings.current
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
+    // Re-request focus whenever all dialogs close, because AlertDialog steals focus and
+    // LaunchedEffect(Unit) does not re-fire after the initial composition.
+    LaunchedEffect(state.hasAnyDialogVisible) {
+        if (!state.hasAnyDialogVisible) focusRequester.requestFocus()
+    }
 
     Row(
         modifier = Modifier
