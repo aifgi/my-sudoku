@@ -49,7 +49,7 @@ fun HintBanner(hintResult: HintResult?) {
                     }
                     Text(text = techniqueName, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = explanationText)
+                    Text(text = explanationText, modifier = Modifier.weight(1f))
                 }
                 is HintResult.NoHint -> Text(text = strings.hintNoHint)
                 is HintResult.NoHintForDifficulty -> Text(text = strings.hintNoHintForDifficulty)
