@@ -121,7 +121,7 @@ Steps 7–13. Tasks in this phase depend on Phase 1 (PuzzleDifficulty sealed cla
 
 ---
 
-- [ ] 3.2 [P] Create `DifficultyMode.kt` enum and add `loadMode`/`saveMode` to `AppPreferences`
+- [x] 3.2 [P] Create `DifficultyMode.kt` enum and add `loadMode`/`saveMode` to `AppPreferences`
   - **Do**:
     1. Create `DifficultyMode.kt` with `enum class DifficultyMode { TECHNIQUE, GIVEN }` in `app/src/main/kotlin/sudoku/app/ui/`
     2. In `AppPreferences.kt`, add `private const val KEY_MODE = "difficulty_mode"`, `fun loadMode(): DifficultyMode` (reads key, defaults to `TECHNIQUE`, catches parse exceptions silently), `fun saveMode(mode: DifficultyMode)` (writes key, catches exceptions, prints to stderr)
