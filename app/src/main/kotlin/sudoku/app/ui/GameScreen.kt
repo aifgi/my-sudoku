@@ -82,7 +82,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
         // ── Left: Sudoku board ──────────────────────────────────────────────
         Box(
             modifier = Modifier
-                .weight(0.6f)
+                .weight(1f)
                 .fillMaxHeight()
                 .padding(12.dp),
             contentAlignment = Alignment.Center,
@@ -111,7 +111,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
         // ── Right: Controls panel ───────────────────────────────────────────
         Column(
             modifier = Modifier
-                .weight(0.4f)
+                .width(280.dp)
                 .fillMaxHeight()
                 .padding(start = 4.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)
                 .focusProperties { canFocus = false },
