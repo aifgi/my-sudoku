@@ -45,39 +45,55 @@ fun offsetToIndex(offset: Offset, cellSize: Float): Int {
     return if (row in 0..8 && col in 0..8) row * 9 + col else -1
 }
 
+private fun isLineComplete(digits: IntArray, conflictIndices: Set<Int>, cells: List<Int>): Boolean =
+    cells.all { digits[it] != 0 && it !in conflictIndices }
+
 private fun DrawScope.drawCells(state: GameState, cellSize: Float) {
+    val selRow = state.selectedIndex?.div(9)
+    val selCol = state.selectedIndex?.rem(9)
+
+    val completedSelRow = selRow != null && isLineComplete(
+        state.digits, state.conflictIndices, (0..8).map { selRow * 9 + it }
+    )
+    val completedSelCol = selCol != null && isLineComplete(
+        state.digits, state.conflictIndices, (0..8).map { it * 9 + selCol }
+    )
+
     for (i in 0..80) {
         val row = i / 9
         val col = i % 9
         val x = col * cellSize
         val y = row * cellSize
-        val rect = Rect(x, y, x + cellSize, y + cellSize)
 
         // Layer 1: base background
         val baseColor = if (state.givens[i]) Color(0xFFF5F5F5) else Color.White
-        drawRect(baseColor, topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+        drawRect(baseColor, topLeft = Offset(x, y), size = Size(cellSize, cellSize))
 
-        // Layer 2: row/column highlight
-        val selRow = state.selectedIndex?.div(9)
-        val selCol = state.selectedIndex?.rem(9)
-        if (state.selectedIndex != null && i != state.selectedIndex && (row == selRow || col == selCol)) {
-            drawRect(Color(0xFFE8EFFF), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+        // Layer 2: row/col highlight
+        if (state.selectedIndex != null && i != state.selectedIndex) {
+            val inSelRow = row == selRow
+            val inSelCol = col == selCol
+            if (inSelRow || inSelCol) {
+                val complete = (inSelRow && completedSelRow) || (inSelCol && completedSelCol)
+                val highlightColor = if (complete) Color(0xFFDFF0DA) else Color(0xFFE8EFFF)
+                drawRect(highlightColor, topLeft = Offset(x, y), size = Size(cellSize, cellSize))
+            }
         }
 
         // Layer 3: number-match overlay
         val digit = state.digits[i]
         if (digit != 0 && digit == state.numberHighlightDigit) {
-            drawRect(Color(0xFFFFF3CD), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+            drawRect(Color(0xFFFFF3CD), topLeft = Offset(x, y), size = Size(cellSize, cellSize))
         }
 
         // Layer 4: selected overlay
         if (i == state.selectedIndex) {
-            drawRect(Color(0xFFC5D8FF), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+            drawRect(Color(0xFFC5D8FF), topLeft = Offset(x, y), size = Size(cellSize, cellSize))
         }
 
         // Layer 5: conflict overlay (drawn on top so it remains visible when selected)
         if (i in state.conflictIndices) {
-            drawRect(Color(0xFFFFCCCC), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+            drawRect(Color(0xFFFFCCCC), topLeft = Offset(x, y), size = Size(cellSize, cellSize))
         }
     }
 }
@@ -113,9 +129,7 @@ private fun DrawScope.drawGrid(cellSize: Float) {
         val strokeWidth = if (isBox) 2f else 0.5f
         val color = if (isBox) thickColor else gridColor
 
-        // Horizontal lines
         drawLine(color, Offset(0f, pos), Offset(totalSize, pos), strokeWidth = strokeWidth)
-        // Vertical lines
         drawLine(color, Offset(pos, 0f), Offset(pos, totalSize), strokeWidth = strokeWidth)
     }
 }
