@@ -321,7 +321,7 @@ Focus: Unit tests for `LocaleResolver`, `AppPreferences`, and `StringsCompletene
 
 ---
 
-- [ ] 4.1 Create PR
+- [x] 4.1 Create PR
   - **Do**:
     1. Confirm on feature branch: `git branch --show-current`
     2. Push: `git push -u origin HEAD`
