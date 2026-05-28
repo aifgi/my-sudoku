@@ -91,7 +91,7 @@ object Generator {
             }
         }
         val givens = puzzle.count { it != 0 }
-        if (givens !in grade.minGivens..grade.maxGivens) return null
+        if (givens != target) return null
         return puzzle
     }
 

@@ -65,6 +65,19 @@ Steps 4–6. Task 2.1 depends on Phase 1 (Grader changes in 1.2 must be complete
 
 ---
 
+- [x] FIX-2.1 Fix `digHolesToTarget` null-return to use exact-target check
+  - **Do**:
+    1. In `Generator.kt`, find the `digHolesToTarget` function
+    2. Change the null-return condition from `if (givens !in grade.minGivens..grade.maxGivens) return null` to `if (givens != target) return null` (where `target` is the local variable already in scope at the top of `digHolesToTarget`)
+    3. This ensures the exact sampled target is required, matching the design's uniform sampling guarantee
+  - **Files**:
+    - `engine/src/main/kotlin/sudoku/engine/Generator.kt` (modify)
+  - **Done when**: `./gradlew :engine:test --tests "sudoku.engine.GeneratorTest"` passes; `digHolesToTarget` returns null when uniqueness pressure prevents reaching exact target
+  - **Commit**: `fix(engine): require exact given-count target in digHolesToTarget`
+  - _Fix for: review finding on task 2.1_
+
+---
+
 - [ ] 2.2 Add `HintExplanationData.Triple` and `HintExplanationData.Swordfish`; update `HintEngine` signature and add triple/swordfish hint methods; update `HintEngineTest`
   - **Do**:
     1. In `HintResult.kt`, add to `HintExplanationData` sealed class: `data class Triple(val cell1: Int, val cell2: Int, val cell3: Int, val d1: Int, val d2: Int, val d3: Int) : HintExplanationData()` and `data class Swordfish(val digit: Int) : HintExplanationData()`
