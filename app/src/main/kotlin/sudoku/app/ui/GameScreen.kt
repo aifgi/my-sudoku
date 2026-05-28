@@ -170,7 +170,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
             }
 
             // Hint banner — fixed-height slot so layout doesn't shift
-            Box(modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)) {
+            Box(modifier = Modifier.fillMaxWidth().height(80.dp)) {
                 if (state.hintResult != null) {
                     HintBanner(hintResult = state.hintResult)
                 }
