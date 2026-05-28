@@ -161,7 +161,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.11 Polish HomeScreen flag toggle layout
+- [x] 1.11 Polish HomeScreen flag toggle layout
   - **Do**:
     1. Wrap the two flag `TextButton` composables in a `Row` with `horizontalArrangement = Arrangement.Center` and add a visible separator or spacing (e.g., `Spacer(Modifier.width(8.dp))`) between flags
     2. Ensure active flag uses `fontWeight = FontWeight.Bold` or a border/background highlight in addition to `alpha` to satisfy AC-2.3 more visibly

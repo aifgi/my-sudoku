@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import sudoku.app.ui.i18n.AppLocale
 import sudoku.app.ui.i18n.LocalStrings
@@ -39,18 +41,25 @@ fun HomeScreen(
                 style = MaterialTheme.typography.h4,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Row {
+            Row(horizontalArrangement = Arrangement.Center) {
                 TextButton(
                     onClick = { if (currentLocale != AppLocale.ENGLISH) onLocaleChange(AppLocale.ENGLISH) },
                     modifier = Modifier.alpha(if (currentLocale == AppLocale.ENGLISH) 1f else 0.4f),
                 ) {
-                    Text("\uD83C\uDDEC\uD83C\uDDE7")
+                    Text(
+                        text = "\uD83C\uDDEC\uD83C\uDDE7",
+                        fontWeight = if (currentLocale == AppLocale.ENGLISH) FontWeight.Bold else FontWeight.Normal,
+                    )
                 }
+                Spacer(modifier = Modifier.width(8.dp))
                 TextButton(
                     onClick = { if (currentLocale != AppLocale.RUSSIAN) onLocaleChange(AppLocale.RUSSIAN) },
                     modifier = Modifier.alpha(if (currentLocale == AppLocale.RUSSIAN) 1f else 0.4f),
                 ) {
-                    Text("\uD83C\uDDF7\uD83C\uDDFA")
+                    Text(
+                        text = "\uD83C\uDDF7\uD83C\uDDFA",
+                        fontWeight = if (currentLocale == AppLocale.RUSSIAN) FontWeight.Bold else FontWeight.Normal,
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
