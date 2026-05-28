@@ -292,21 +292,21 @@ Focus: Unit tests for `LocaleResolver`, `AppPreferences`, and `StringsCompletene
 
 ---
 
-- [ ] V4 [VERIFY] Full local CI: build + test
+- [x] V4 [VERIFY] Full local CI: build + test
   - **Do**: Run complete build and test suite; confirm zero errors and zero test failures
   - **Verify**: `./gradlew build 2>&1 | grep -E "BUILD|tests|failures|errors" | tail -10`
   - **Done when**: `BUILD SUCCESSFUL`; test summary shows 0 failures; no compiler errors
   - **Commit**: `chore(i18n): pass local CI` (if fixes needed)
   - _Requirements: FR-1, FR-2, FR-3, FR-4, FR-5, FR-6, FR-7, FR-8, FR-9, FR-10, FR-11, FR-12_
 
-- [ ] V5 [VERIFY] CI pipeline passes
+- [x] V5 [VERIFY] CI pipeline passes
   - **Do**: Push branch and verify GitHub Actions CI passes
   - **Verify**: `gh pr checks 2>/dev/null || echo "Push branch first, then check gh pr checks"`
   - **Done when**: All CI checks show green; or confirm no CI configured and build passes locally
   - **Commit**: None
   - _Requirements: FR-1, FR-2, FR-3, FR-4, FR-5, FR-6, FR-7, FR-8, FR-9, FR-10, FR-11, FR-12_
 
-- [ ] V6 [VERIFY] AC checklist
+- [x] V6 [VERIFY] AC checklist
   - **Do**:
     1. AC-1.1/1.2: `grep -r "startsWith.*ru\|language.*ru" app/src/main/kotlin/sudoku/app/ui/i18n/ && echo AC-1-PASS`
     2. AC-2.1/2.3: `grep -r "🇬🇧\|🇷🇺\|alpha" app/src/main/kotlin/sudoku/app/ui/HomeScreen.kt && echo AC-2-PASS`
