@@ -115,7 +115,7 @@ compose.desktop {
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
             )
             packageName = "Sudoku"
-            packageVersion = "1.0.0"
+            packageVersion = (findProperty("packageVersion") as String?) ?: "1.0.0"
             description = "Sudoku puzzle game"
             windows {
                 menuGroup = "Sudoku"
