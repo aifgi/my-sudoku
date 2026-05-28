@@ -5,40 +5,65 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import sudoku.app.state.GameIntent
 import sudoku.app.state.GameViewModel
+import sudoku.app.ui.i18n.AppLocale
+import sudoku.app.ui.i18n.AppPreferences
+import sudoku.app.ui.i18n.EnglishStrings
+import sudoku.app.ui.i18n.LocalStrings
+import sudoku.app.ui.i18n.RussianStrings
+import sudoku.app.ui.i18n.Strings
+import java.util.Locale
+
+private fun resolveInitialLocale(): AppLocale {
+    AppPreferences.loadLocale()?.let { return it }
+    return if (Locale.getDefault().language.startsWith("ru")) AppLocale.RUSSIAN else AppLocale.ENGLISH
+}
+
+fun AppLocale.toStrings(): Strings = when (this) {
+    AppLocale.ENGLISH -> EnglishStrings
+    AppLocale.RUSSIAN -> RussianStrings
+}
 
 @Composable
 fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
+    var locale by remember { mutableStateOf(resolveInitialLocale()) }
     val state by viewModel.state.collectAsState()
     val onIntent = viewModel::dispatch
 
-    when {
-        state.isLoading -> CircularProgressIndicator()
-        state.digits.all { it == 0 } && !state.isComplete && state.undoStack.isEmpty() ->
-            HomeScreen(onDifficultySelected = { difficulty ->
-                onIntent(GameIntent.StartNewGame(difficulty))
-            })
-        else -> GameScreen(state = state, onIntent = onIntent)
-    }
+    CompositionLocalProvider(LocalStrings provides locale.toStrings()) {
+        when {
+            state.isLoading -> CircularProgressIndicator()
+            state.digits.all { it == 0 } && !state.isComplete && state.undoStack.isEmpty() ->
+                HomeScreen(onDifficultySelected = { difficulty ->
+                    onIntent(GameIntent.StartNewGame(difficulty))
+                })
+            else -> GameScreen(state = state, onIntent = onIntent)
+        }
 
-    if (state.showQuitConfirmation) {
-        AlertDialog(
-            onDismissRequest = { onIntent(GameIntent.CancelQuit) },
-            title = { Text("Quit Game?") },
-            text = { Text("You have unsaved progress. Are you sure you want to quit?") },
-            confirmButton = {
-                TextButton(onClick = { onIntent(GameIntent.ConfirmQuit); onExitConfirmed() }) {
-                    Text("Quit")
+        if (state.showQuitConfirmation) {
+            val strings = LocalStrings.current
+            AlertDialog(
+                onDismissRequest = { onIntent(GameIntent.CancelQuit) },
+                title = { Text(strings.quitTitle) },
+                text = { Text(strings.quitMessage) },
+                confirmButton = {
+                    TextButton(onClick = { onIntent(GameIntent.ConfirmQuit); onExitConfirmed() }) {
+                        Text(strings.quitConfirm)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { onIntent(GameIntent.CancelQuit) }) {
+                        Text(strings.quitCancel)
+                    }
                 }
-            },
-            dismissButton = {
-                TextButton(onClick = { onIntent(GameIntent.CancelQuit) }) {
-                    Text("Cancel")
-                }
-            }
-        )
+            )
+        }
     }
 }

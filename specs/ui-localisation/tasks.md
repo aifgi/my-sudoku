@@ -53,7 +53,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.4 Wire `App.kt`: locale state + `CompositionLocalProvider` + quit dialog strings
+- [x] 1.4 Wire `App.kt`: locale state + `CompositionLocalProvider` + quit dialog strings
   - **Do**:
     1. Add imports: `sudoku.app.ui.i18n.*`, `androidx.compose.runtime.mutableStateOf`, `androidx.compose.runtime.remember`, `androidx.compose.runtime.setValue`, `androidx.compose.runtime.getValue`, `androidx.compose.runtime.CompositionLocalProvider`, `java.util.Locale`
     2. Add top-level private function `resolveInitialLocale(): AppLocale` (above `App` composable): calls `AppPreferences.loadLocale()?.let { return it }`, then `return if (Locale.getDefault().language.startsWith("ru")) AppLocale.RUSSIAN else AppLocale.ENGLISH`
