@@ -1,11 +1,10 @@
 package sudoku.app.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -47,9 +46,10 @@ fun HintBanner(hintResult: HintResult?) {
                             strings.hintExplainPointingPairCol(data.digit, data.box, data.col)
                         null -> result.explanation
                     }
-                    Text(text = techniqueName, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = explanationText)
+                    Column {
+                        Text(text = techniqueName, fontWeight = FontWeight.Bold)
+                        Text(text = explanationText)
+                    }
                 }
                 is HintResult.NoHint -> Text(text = strings.hintNoHint)
                 is HintResult.NoHintForDifficulty -> Text(text = strings.hintNoHintForDifficulty)
