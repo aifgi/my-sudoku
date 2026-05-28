@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import sudoku.app.ui.i18n.LocalStrings
 import sudoku.engine.Difficulty
 
 @Composable
@@ -26,6 +27,7 @@ fun CompletionOverlay(
     onNewGame: () -> Unit,
     onBackToHome: () -> Unit,
 ) {
+    val strings = LocalStrings.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -37,7 +39,7 @@ fun CompletionOverlay(
             modifier = Modifier.padding(32.dp),
         ) {
             Text(
-                text = "Puzzle Solved!",
+                text = strings.completionTitle,
                 style = MaterialTheme.typography.h4,
                 color = Color.White,
             )
@@ -56,11 +58,11 @@ fun CompletionOverlay(
             Spacer(modifier = Modifier.height(24.dp))
             Row {
                 Button(onClick = onNewGame) {
-                    Text("New Game")
+                    Text(strings.completionNewGame)
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = onBackToHome) {
-                    Text("Back to Home")
+                    Text(strings.completionBackToHome)
                 }
             }
         }

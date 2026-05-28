@@ -7,13 +7,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import sudoku.app.ui.AppColors
+import sudoku.app.ui.i18n.LocalStrings
 
 @Composable
-fun GameOverDialog(onNewGame: () -> Unit) {
+fun GameOverDialog(mistakeCount: Int, onNewGame: () -> Unit) {
+    val strings = LocalStrings.current
     AlertDialog(
         onDismissRequest = {},
-        title = { Text("Game Over") },
-        text = { Text("You made 3 mistakes. Better luck next time!") },
+        title = { Text(strings.gameOverTitle) },
+        text = { Text(strings.gameOverMistakes(mistakeCount)) },
         confirmButton = {
             Button(
                 onClick = onNewGame,
@@ -22,7 +24,7 @@ fun GameOverDialog(onNewGame: () -> Unit) {
                     contentColor = Color.White,
                 ),
             ) {
-                Text("New Game")
+                Text(strings.gameOverNewGame)
             }
         },
         dismissButton = null,

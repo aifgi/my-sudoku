@@ -42,7 +42,8 @@ object HintEngine {
                     technique = "Naked Single",
                     targetCells = listOf(i),
                     peerCells = PEERS[i].toList(),
-                    explanation = "Naked Single at ${cellName(i)}: only $digit fits"
+                    explanation = "Naked Single at ${cellName(i)}: only $digit fits",
+                    explanationData = HintExplanationData.Single(cellName(i), digit)
                 )
             }
         }
@@ -60,7 +61,8 @@ object HintEngine {
                         technique = "Hidden Single",
                         targetCells = listOf(cellIndex),
                         peerCells = unit.filter { it != cellIndex }.toList(),
-                        explanation = "Hidden Single at ${cellName(cellIndex)}: digit $digit can only go here in this unit"
+                        explanation = "Hidden Single at ${cellName(cellIndex)}: digit $digit can only go here in this unit",
+                        explanationData = HintExplanationData.Single(cellName(cellIndex), digit)
                     )
                 }
             }
@@ -87,7 +89,8 @@ object HintEngine {
                             technique = "Naked Pair",
                             targetCells = listOf(a, b),
                             peerCells = peerCells,
-                            explanation = "Naked Pair at ${cellName(a)} and ${cellName(b)}: digits $d1 and $d2 are confined here"
+                            explanation = "Naked Pair at ${cellName(a)} and ${cellName(b)}: digits $d1 and $d2 are confined here",
+                            explanationData = HintExplanationData.Pair(cellName(a), cellName(b), d1, d2)
                         )
                     }
                 }
@@ -112,7 +115,8 @@ object HintEngine {
                             technique = "Hidden Pair",
                             targetCells = listOf(a, b),
                             peerCells = unit.filter { it != a && it != b }.toList(),
-                            explanation = "Hidden Pair at ${cellName(a)} and ${cellName(b)}: digits $d1 and $d2 are confined to these cells"
+                            explanation = "Hidden Pair at ${cellName(a)} and ${cellName(b)}: digits $d1 and $d2 are confined to these cells",
+                            explanationData = HintExplanationData.Pair(cellName(a), cellName(b), d1, d2)
                         )
                     }
                 }
@@ -138,7 +142,8 @@ object HintEngine {
                             technique = "Pointing Pair",
                             targetCells = cells,
                             peerCells = rowCells,
-                            explanation = "Pointing Pair: digit $digit in box ${boxIndex + 1} is confined to row ${row + 1}, eliminating it from other row cells"
+                            explanation = "Pointing Pair: digit $digit in box ${boxIndex + 1} is confined to row ${row + 1}, eliminating it from other row cells",
+                            explanationData = HintExplanationData.PointingPairRow(digit, boxIndex + 1, row + 1)
                         )
                     }
                 }
@@ -152,7 +157,8 @@ object HintEngine {
                             technique = "Pointing Pair",
                             targetCells = cells,
                             peerCells = colCells,
-                            explanation = "Pointing Pair: digit $digit in box ${boxIndex + 1} is confined to column ${col + 1}, eliminating it from other column cells"
+                            explanation = "Pointing Pair: digit $digit in box ${boxIndex + 1} is confined to column ${col + 1}, eliminating it from other column cells",
+                            explanationData = HintExplanationData.PointingPairCol(digit, boxIndex + 1, col + 1)
                         )
                     }
                 }
