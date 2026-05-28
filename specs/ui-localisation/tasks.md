@@ -23,7 +23,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.2 Create `RussianStrings` and `AppPreferences`
+- [x] 1.2 Create `RussianStrings` and `AppPreferences`
   - **Do**:
     1. Create `app/src/main/kotlin/sudoku/app/ui/i18n/RussianStrings.kt` — `object RussianStrings : Strings` with all 24 Cyrillic values. Use the following translations:
        - `appTitle = "Судоку"`, `difficultyEasy = "Лёгкий"`, `difficultyMedium = "Средний"`, `difficultyHard = "Сложный"`, `difficultyExpert = "Эксперт"`
