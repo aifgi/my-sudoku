@@ -57,18 +57,25 @@ private fun DrawScope.drawCells(state: GameState, cellSize: Float) {
         val baseColor = if (state.givens[i]) Color(0xFFF5F5F5) else Color.White
         drawRect(baseColor, topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
 
-        // Layer 2: number-match overlay
+        // Layer 2: row/column highlight
+        val selRow = state.selectedIndex?.div(9)
+        val selCol = state.selectedIndex?.rem(9)
+        if (state.selectedIndex != null && i != state.selectedIndex && (row == selRow || col == selCol)) {
+            drawRect(Color(0xFFE8EFFF), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
+        }
+
+        // Layer 3: number-match overlay
         val digit = state.digits[i]
         if (digit != 0 && digit == state.numberHighlightDigit) {
             drawRect(Color(0xFFFFF3CD), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
         }
 
-        // Layer 3: selected overlay
+        // Layer 4: selected overlay
         if (i == state.selectedIndex) {
             drawRect(Color(0xFFC5D8FF), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
         }
 
-        // Layer 4: conflict overlay (drawn on top so it remains visible when selected)
+        // Layer 5: conflict overlay (drawn on top so it remains visible when selected)
         if (i in state.conflictIndices) {
             drawRect(Color(0xFFFFCCCC), topLeft = Offset(rect.left, rect.top), size = Size(cellSize, cellSize))
         }
