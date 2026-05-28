@@ -4,7 +4,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(maxOf(21, (findProperty("javaVersion") as String?)?.toInt() ?: 21))
 }
 
 dependencies {
