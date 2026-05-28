@@ -136,7 +136,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.9 Replace hardcoded stat labels and action button in `GameScreen.kt`
+- [x] 1.9 Replace hardcoded stat labels and action button in `GameScreen.kt`
   - **Do**:
     1. Add `import sudoku.app.ui.i18n.LocalStrings`
     2. At top of `GameScreen` composable body, add `val strings = LocalStrings.current`

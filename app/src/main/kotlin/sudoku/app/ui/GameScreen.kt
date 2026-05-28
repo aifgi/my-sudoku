@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import sudoku.app.state.GameIntent
 import sudoku.app.state.GameState
 import sudoku.app.ui.AppColors
+import sudoku.app.ui.i18n.LocalStrings
 import sudoku.app.ui.components.CompletionOverlay
 import sudoku.app.ui.components.GameOverDialog
 import sudoku.app.ui.components.HintBanner
@@ -60,6 +61,7 @@ import sudoku.engine.Difficulty
 
 @Composable
 fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
+    val strings = LocalStrings.current
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
@@ -114,9 +116,9 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                StatItem(label = "Mistakes", value = "${state.mistakeCount}/3")
+                StatItem(label = strings.statMistakes, value = "${state.mistakeCount}/3")
                 StatItem(
-                    label = "Time",
+                    label = strings.statTime,
                     value = formatTime(state.timerSeconds),
                     trailing = {
                         Box(
@@ -189,7 +191,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
                 elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
             ) {
                 Text(
-                    text = "New Game",
+                    text = strings.actionNewGame,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                 )
