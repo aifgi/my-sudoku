@@ -1,0 +1,16 @@
+{
+  "source": "plan",
+  "name": "fix-hint-overflow",
+  "basePath": "./specs/fix-hint-overflow",
+  "phase": "execution",
+  "taskIndex": 0,
+  "totalTasks": 7,
+  "taskIteration": 1,
+  "maxTaskIterations": 5,
+  "globalIteration": 1,
+  "maxGlobalIterations": 100,
+  "commitSpec": true,
+  "quickMode": true,
+  "discoveredSkills": [],
+  "awaitingApproval": false
+}
