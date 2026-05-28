@@ -78,7 +78,7 @@ Steps 4–6. Task 2.1 depends on Phase 1 (Grader changes in 1.2 must be complete
 
 ---
 
-- [ ] 2.2 Add `HintExplanationData.Triple` and `HintExplanationData.Swordfish`; update `HintEngine` signature and add triple/swordfish hint methods; update `HintEngineTest`
+- [x] 2.2 Add `HintExplanationData.Triple` and `HintExplanationData.Swordfish`; update `HintEngine` signature and add triple/swordfish hint methods; update `HintEngineTest`
   - **Do**:
     1. In `HintResult.kt`, add to `HintExplanationData` sealed class: `data class Triple(val cell1: Int, val cell2: Int, val cell3: Int, val d1: Int, val d2: Int, val d3: Int) : HintExplanationData()` and `data class Swordfish(val digit: Int) : HintExplanationData()`
     2. Change `HintEngine.findHint` signature from `(board: Board, difficulty: Difficulty)` to `(board: Board, difficulty: PuzzleDifficulty)`
