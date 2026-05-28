@@ -49,7 +49,7 @@ Steps 4–6. Task 2.1 depends on Phase 1 (Grader changes in 1.2 must be complete
 
 ---
 
-- [ ] 2.1 Add `generateByGivenCount` to `Generator` and update `GeneratorTest`
+- [x] 2.1 Add `generateByGivenCount` to `Generator` and update `GeneratorTest`
   - **Do**:
     1. Add private `fun digHolesToTarget(solution: IntArray, grade: GivenGrade): IntArray?` — shuffle cell indices, dig holes until `81 - holes == target` (target sampled uniformly from `grade.minGivens..grade.maxGivens`), checking `Solver.countSolutions(puzzle, 2) == 1` each step; return `null` if uniqueness blocks target
     2. Add private `fun ceilingExceeded(puzzle: IntArray, grade: GivenGrade): Boolean` — for SINGLES: inline apply Naked/Hidden Singles loop using `Grader.computeCandidates` (now `internal`), return `digits.any { it == 0 }`; for PAIRS: call `Grader.grade(puzzle)`, return true if grade is HARD or EXPERT

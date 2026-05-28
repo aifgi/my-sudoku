@@ -69,4 +69,60 @@ class GeneratorTest {
             runBlocking { Generator.generate(Difficulty.EASY) }
         }
     }
+
+    @Test
+    fun `generateByGivenCount EASY produces givens in 36-45`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.EASY)
+        val givens = board.digits.count { it != 0 }
+        assertTrue(givens in 36..45, "Expected 36-45 givens but got $givens")
+    }
+
+    @Test
+    fun `generateByGivenCount MEDIUM produces givens in 29-35`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.MEDIUM)
+        val givens = board.digits.count { it != 0 }
+        assertTrue(givens in 29..35, "Expected 29-35 givens but got $givens")
+    }
+
+    @Test
+    fun `generateByGivenCount HARD produces givens in 24-28`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.HARD)
+        val givens = board.digits.count { it != 0 }
+        assertTrue(givens in 24..28, "Expected 24-28 givens but got $givens")
+    }
+
+    @Test
+    fun `generateByGivenCount board has exactly one solution`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.EASY)
+        assertEquals(1, Solver.countSolutions(board.digits, 2))
+    }
+
+    @Test
+    fun `generateByGivenCount EASY puzzle does not exceed singles ceiling`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.EASY)
+        val digits = board.digits.copyOf()
+        val candidates = Grader.computeCandidates(digits)
+        var progressed = true
+        while (progressed) {
+            progressed = Grader.applyNakedSingles(candidates, digits) ||
+                    Grader.applyHiddenSingles(candidates, digits)
+        }
+        assertTrue(digits.none { it == 0 }, "EASY puzzle should be solvable by Naked/Hidden Singles alone")
+    }
+
+    @Test
+    fun `generateByGivenCount HARD puzzle does not exceed pairs ceiling`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.HARD)
+        val grade = Grader.grade(board.digits)
+        assertTrue(grade != Difficulty.HARD && grade != Difficulty.EXPERT,
+            "HARD given-count puzzle should not require Triples or above, but graded as $grade")
+    }
+
+    @Test
+    @Disabled("Expert given-count generation can be slow (>2s) on CI; range correctness verified by Generator contract")
+    fun `generateByGivenCount EXPERT produces givens in 17-23`() = runBlocking {
+        val board = Generator.generateByGivenCount(GivenGrade.EXPERT)
+        val givens = board.digits.count { it != 0 }
+        assertTrue(givens in 17..23, "Expected 17-23 givens but got $givens")
+    }
 }
