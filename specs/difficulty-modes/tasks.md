@@ -21,7 +21,7 @@ Steps 1–3: no inter-phase dependencies; all three tasks can start in parallel.
 
 ---
 
-- [ ] 1.2 [P] Add `applyNakedTriples`, `applyHiddenTriples`, `applySwordfish` to `Grader` and restructure grade ladder
+- [x] 1.2 [P] Add `applyNakedTriples`, `applyHiddenTriples`, `applySwordfish` to `Grader` and restructure grade ladder
   - **Do**:
     1. Change `computeCandidates` visibility from `private` to `internal` in `Grader.kt`
     2. Implement `internal fun applyNakedTriples(candidates: IntArray, digits: IntArray): Boolean` — for each unit, find all 3-cell subsets whose union of candidates contains exactly 3 digits; eliminate those 3 digits from all other cells in the unit; return true if any elimination occurred

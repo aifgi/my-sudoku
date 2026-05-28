@@ -6,36 +6,40 @@ object Grader {
         val digits = puzzle.copyOf()
         val candidates = computeCandidates(digits)
 
-        // Easy techniques only
+        // Tier 1 (EASY): Naked Singles + Hidden Singles
         var progressed = true
         while (progressed) {
             progressed = applyNakedSingles(candidates, digits) || applyHiddenSingles(candidates, digits)
         }
         if (digits.none { it == 0 }) return Difficulty.EASY
 
-        // Add Medium techniques
-        progressed = true
-        while (progressed) {
-            progressed = applyNakedSingles(candidates, digits) || applyHiddenSingles(candidates, digits) ||
-                    applyNakedPairs(candidates, digits) || applyHiddenPairs(candidates, digits)
-        }
-        if (digits.none { it == 0 }) return Difficulty.MEDIUM
-
-        // Add Hard technique
+        // Tier 2 (MEDIUM): + Naked Pairs + Hidden Pairs + Pointing Pairs
         progressed = true
         while (progressed) {
             progressed = applyNakedSingles(candidates, digits) || applyHiddenSingles(candidates, digits) ||
                     applyNakedPairs(candidates, digits) || applyHiddenPairs(candidates, digits) ||
                     applyPointingPairs(candidates, digits)
         }
-        if (digits.none { it == 0 }) return Difficulty.HARD
+        if (digits.none { it == 0 }) return Difficulty.MEDIUM
 
-        // Add Expert technique
+        // Tier 3 (HARD): + Naked Triples + Hidden Triples
         progressed = true
         while (progressed) {
             progressed = applyNakedSingles(candidates, digits) || applyHiddenSingles(candidates, digits) ||
                     applyNakedPairs(candidates, digits) || applyHiddenPairs(candidates, digits) ||
-                    applyPointingPairs(candidates, digits) || applyXWing(candidates, digits)
+                    applyPointingPairs(candidates, digits) ||
+                    applyNakedTriples(candidates, digits) || applyHiddenTriples(candidates, digits)
+        }
+        if (digits.none { it == 0 }) return Difficulty.HARD
+
+        // Tier 4 (EXPERT): + X-Wing + Swordfish (fall-through)
+        progressed = true
+        while (progressed) {
+            progressed = applyNakedSingles(candidates, digits) || applyHiddenSingles(candidates, digits) ||
+                    applyNakedPairs(candidates, digits) || applyHiddenPairs(candidates, digits) ||
+                    applyPointingPairs(candidates, digits) ||
+                    applyNakedTriples(candidates, digits) || applyHiddenTriples(candidates, digits) ||
+                    applyXWing(candidates, digits) || applySwordfish(candidates, digits)
         }
         return Difficulty.EXPERT
     }
@@ -44,7 +48,7 @@ object Grader {
     // Candidate initialisation
     // ---------------------------------------------------------------------------
 
-    private fun computeCandidates(digits: IntArray): IntArray {
+    internal fun computeCandidates(digits: IntArray): IntArray {
         val allMask = (1..9).fold(0) { acc, d -> acc or (1 shl d) }
         return IntArray(81) { i ->
             if (digits[i] != 0) 0
@@ -260,6 +264,149 @@ object Grader {
                                 if (row != r1 && row != r2 && candidates[cell] and bit != 0) {
                                     candidates[cell] = candidates[cell] and bit.inv()
                                     progress = true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return progress
+    }
+
+    // ---------------------------------------------------------------------------
+    // Technique 7: Naked Triples
+    // ---------------------------------------------------------------------------
+
+    internal fun applyNakedTriples(candidates: IntArray, digits: IntArray): Boolean {
+        var progress = false
+        for (unit in ALL_UNITS) {
+            // Candidates cells with 2 or 3 candidates
+            val eligible = unit.filter { candidates[it] != 0 && Integer.bitCount(candidates[it]) in 2..3 }
+            // Check all 3-cell subsets
+            for (ai in eligible.indices) {
+                for (bi in ai + 1 until eligible.size) {
+                    for (ci in bi + 1 until eligible.size) {
+                        val cellA = eligible[ai]
+                        val cellB = eligible[bi]
+                        val cellC = eligible[ci]
+                        val union = candidates[cellA] or candidates[cellB] or candidates[cellC]
+                        if (Integer.bitCount(union) == 3) {
+                            // Eliminate these 3 digits from all other cells in the unit
+                            for (cell in unit) {
+                                if (cell != cellA && cell != cellB && cell != cellC &&
+                                    candidates[cell] and union != 0) {
+                                    candidates[cell] = candidates[cell] and union.inv()
+                                    progress = true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return progress
+    }
+
+    // ---------------------------------------------------------------------------
+    // Technique 8: Hidden Triples
+    // ---------------------------------------------------------------------------
+
+    internal fun applyHiddenTriples(candidates: IntArray, digits: IntArray): Boolean {
+        var progress = false
+        for (unit in ALL_UNITS) {
+            // For each digit, find which cells in the unit have it as a candidate
+            val positions = Array(10) { mutableListOf<Int>() }
+            for (cell in unit) {
+                for (d in 1..9) {
+                    if (candidates[cell] and (1 shl d) != 0) positions[d].add(cell)
+                }
+            }
+            // Find 3 digits that each appear in 2 or 3 cells, and together span exactly 3 cells
+            for (d1 in 1..7) {
+                if (positions[d1].size !in 2..3) continue
+                for (d2 in d1 + 1..8) {
+                    if (positions[d2].size !in 2..3) continue
+                    for (d3 in d2 + 1..9) {
+                        if (positions[d3].size !in 2..3) continue
+                        val cells = (positions[d1] + positions[d2] + positions[d3]).toSet()
+                        if (cells.size == 3) {
+                            val keepMask = (1 shl d1) or (1 shl d2) or (1 shl d3)
+                            for (cell in cells) {
+                                if (candidates[cell] and keepMask.inv() != 0) {
+                                    candidates[cell] = candidates[cell] and keepMask
+                                    progress = true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return progress
+    }
+
+    // ---------------------------------------------------------------------------
+    // Technique 9: Swordfish
+    // ---------------------------------------------------------------------------
+
+    internal fun applySwordfish(candidates: IntArray, digits: IntArray): Boolean {
+        var progress = false
+        for (d in 1..9) {
+            val bit = 1 shl d
+
+            // Row-based Swordfish: find rows where digit appears in 2 or 3 columns
+            val rowCols = Array(9) { r ->
+                ROW_UNITS[r].filter { candidates[it] and bit != 0 }.map { it % 9 }.toSet()
+            }
+            val eligibleRows = (0..8).filter { rowCols[it].size in 2..3 }
+            // Check all 3-row subsets
+            for (ri in eligibleRows.indices) {
+                for (rj in ri + 1 until eligibleRows.size) {
+                    for (rk in rj + 1 until eligibleRows.size) {
+                        val r1 = eligibleRows[ri]
+                        val r2 = eligibleRows[rj]
+                        val r3 = eligibleRows[rk]
+                        val colUnion = rowCols[r1] + rowCols[r2] + rowCols[r3]
+                        if (colUnion.size == 3) {
+                            // Eliminate digit from those 3 columns, except rows r1, r2, r3
+                            for (col in colUnion) {
+                                for (cell in COL_UNITS[col]) {
+                                    val row = cell / 9
+                                    if (row != r1 && row != r2 && row != r3 &&
+                                        candidates[cell] and bit != 0) {
+                                        candidates[cell] = candidates[cell] and bit.inv()
+                                        progress = true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Column-based Swordfish: symmetric variant
+            val colRows = Array(9) { c ->
+                COL_UNITS[c].filter { candidates[it] and bit != 0 }.map { it / 9 }.toSet()
+            }
+            val eligibleCols = (0..8).filter { colRows[it].size in 2..3 }
+            for (ci in eligibleCols.indices) {
+                for (cj in ci + 1 until eligibleCols.size) {
+                    for (ck in cj + 1 until eligibleCols.size) {
+                        val c1 = eligibleCols[ci]
+                        val c2 = eligibleCols[cj]
+                        val c3 = eligibleCols[ck]
+                        val rowUnion = colRows[c1] + colRows[c2] + colRows[c3]
+                        if (rowUnion.size == 3) {
+                            // Eliminate digit from those 3 rows, except cols c1, c2, c3
+                            for (row in rowUnion) {
+                                for (cell in ROW_UNITS[row]) {
+                                    val col = cell % 9
+                                    if (col != c1 && col != c2 && col != c3 &&
+                                        candidates[cell] and bit != 0) {
+                                        candidates[cell] = candidates[cell] and bit.inv()
+                                        progress = true
+                                    }
                                 }
                             }
                         }
