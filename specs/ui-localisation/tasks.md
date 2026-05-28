@@ -174,7 +174,7 @@ Accept any shortcuts (stub Russian strings, simple layout for toggle).
 
 ---
 
-- [ ] 1.12 POC Checkpoint — full build
+- [x] 1.12 POC Checkpoint — full build
   - **Do**: Run full build; verify the entire app compiles with i18n wired end-to-end
   - **Verify**: `./gradlew build 2>&1 | tail -10`
   - **Done when**: BUILD SUCCESSFUL; no compile errors; all 7 composable files use `LocalStrings.current`
