@@ -203,7 +203,7 @@ Steps 11–13. Depends on Phase 3 being complete.
 
 ---
 
-- [ ] 4.3 Full build verification and engine test pass
+- [x] 4.3 Full build verification and engine test pass
   - **Do**:
     1. Run `./gradlew :engine:test` — all engine tests must pass (GraderTest, GeneratorTest, HintEngineTest, and any others)
     2. Run `./gradlew :app:compileKotlin` — app module must compile cleanly with zero errors
