@@ -42,9 +42,12 @@ jobs:
         run: choco install wixtoolset -y
 
       - name: Build and test
-        run: >
-          ./gradlew :engine:test :app:${{ matrix.task }}
-          ${{ inputs.version != '' && format('-PpackageVersion={0}', inputs.version) || '' }}
+        shell: bash
+        run: |
+          VERSION="${{ inputs.version }}"
+          ARGS=()
+          [ -n "$VERSION" ] && ARGS+=("-PpackageVersion=$VERSION")
+          ./gradlew :engine:test :app:${{ matrix.task }} "${ARGS[@]}"
 
       - name: Rename artifacts to release version
         if: inputs.version != ''

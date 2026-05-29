@@ -107,6 +107,10 @@ val generateIconIcns by tasks.registering {
     }
 }
 
+// jpackage requires the first version component to be >= 1
+val rawVersion = (findProperty("packageVersion") as String?) ?: "1.0.0"
+val jpackageVersion = if (rawVersion.startsWith("0.")) "1." + rawVersion.substringAfter("0.") else rawVersion
+
 compose.desktop {
     application {
         mainClass = "sudoku.app.MainKt"
@@ -117,9 +121,7 @@ compose.desktop {
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
             )
             packageName = "Sudoku"
-            val rawVersion = (findProperty("packageVersion") as String?) ?: "1.0.0"
-            // jpackage requires the first version component to be >= 1
-            packageVersion = if (rawVersion.startsWith("0.")) "1." + rawVersion.substringAfter("0.") else rawVersion
+            packageVersion = jpackageVersion
             description = "Sudoku puzzle game"
             windows {
                 menuGroup = "Sudoku"
