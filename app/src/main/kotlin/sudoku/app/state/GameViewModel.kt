@@ -156,6 +156,7 @@ class GameViewModel(
     private fun applyEraseCell(state: GameState): GameState {
         val idx = state.selectedIndex ?: return state
         if (state.givens[idx]) return state
+        if (state.digits[idx] == 0) return state
         val newDigits = state.digits.copyOf()
         newDigits[idx] = 0
         val newUndo = state.undoStack + listOf(state.digits.copyOf())
