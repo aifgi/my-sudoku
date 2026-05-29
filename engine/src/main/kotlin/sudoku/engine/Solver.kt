@@ -6,16 +6,16 @@ object Solver {
     fun solve(board: Board): IntArray? {
         if (computeConflicts(board.digits).isNotEmpty()) return null
         val digits = board.digits.copyOf()
-        return if (backtrack(digits, 0)) digits else null
+        return if (backtrack(digits)) digits else null
     }
 
-    private fun backtrack(digits: IntArray, startIndex: Int): Boolean {
+    private fun backtrack(digits: IntArray): Boolean {
         val idx = pickMRV(digits)
         if (idx == -1) return true  // board complete
         for (d in 1..9) {
             if (isValidPlacement(digits, idx, d)) {
                 digits[idx] = d
-                if (backtrack(digits, idx + 1)) return true
+                if (backtrack(digits)) return true
                 digits[idx] = 0
             }
         }
