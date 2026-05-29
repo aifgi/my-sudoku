@@ -154,7 +154,7 @@ Steps 7–13. Tasks in this phase depend on Phase 1 (PuzzleDifficulty sealed cla
   - **Do**:
     1. In `Strings.kt`, add to the interface: `val modeTechnique: String`, `val modeGiven: String`, `val hintNakedTriple: String`, `val hintHiddenTriple: String`, `val hintSwordfish: String`, `val hintExplainNakedTriple: (String, String, String, Int, Int, Int) -> String`, `val hintExplainHiddenTriple: (String, String, String, Int, Int, Int) -> String`, `val hintExplainSwordfish: (Int) -> String`
     2. In `EnglishStrings.kt`, add values: `modeTechnique = "Technique"`, `modeGiven = "Given Count"`, `hintNakedTriple = "Naked Triple"`, `hintHiddenTriple = "Hidden Triple"`, `hintSwordfish = "Swordfish"`, and the three lambda explanations per the design
-    3. In `RussianStrings.kt`, add corresponding Russian values for all eight keys (use: `modeTechnique = "Техника"`, `modeGiven = "Количество подсказок"`, `hintNakedTriple = "Открытая тройка"`, `hintHiddenTriple = "Скрытая тройка"`, `hintSwordfish = "Рыба-меч"`, and Russian explanation lambdas)
+    3. In `RussianStrings.kt`, add corresponding Russian values for all eight keys (use: `modeTechnique = "Техника"`, `modeGiven = "Количество открытых"`, `hintNakedTriple = "Открытая тройка"`, `hintHiddenTriple = "Скрытая тройка"`, `hintSwordfish = "Рыба-меч"`, and Russian explanation lambdas)
   - **Files**:
     - `app/src/main/kotlin/sudoku/app/ui/i18n/Strings.kt` (modify)
     - `app/src/main/kotlin/sudoku/app/ui/i18n/EnglishStrings.kt` (modify)

@@ -40,7 +40,7 @@ object RussianStrings : Strings {
     override val hintExplainSwordfish: (Int) -> String =
         { digit -> "Рыба-меч: цифра $digit исключена из строк" }
     override val modeTechnique = "Техника"
-    override val modeGiven = "Количество подсказок"
+    override val modeGiven = "Количество открытых"
 
     override val pauseTitle = "Игра на паузе"
     override val pauseResume = "Продолжить"
