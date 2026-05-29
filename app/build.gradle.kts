@@ -142,7 +142,5 @@ afterEvaluate {
     listOf("packageMsi", "packageDeb").forEach { name ->
         tasks.findByName(name)?.dependsOn(generateIconPng)
     }
-    tasks.named<JavaExec>("run") {
-        jvmArgs("-Ddebug=true")
-    }
+    (tasks.findByName("run") as? JavaExec)?.jvmArgs("-Ddebug=true")
 }

@@ -6,7 +6,7 @@ on:
       version:
         type: string
         default: ''
-      package-version:
+      packageVersion:
         type: string
         default: ''
 
@@ -47,16 +47,16 @@ jobs:
       - name: Build and test
         run: >
           ./gradlew :engine:test :app:${{ matrix.task }}
-          ${{ inputs.package-version != '' && format('-PpackageVersion={0}', inputs.package-version) || '' }}
+          ${{ inputs.packageVersion != '' && format('-PpackageVersion={0}', inputs.packageVersion) || '' }}
 
       - name: Rename artifacts to real version
-        if: inputs.version != '' && inputs.version != inputs.package-version
+        if: inputs.version != '' && inputs.version != inputs.packageVersion
         shell: bash
         run: |
           find "${{ matrix.artifact-path }}" -type f | while read -r f; do
             dir=$(dirname "$f")
             base=$(basename "$f")
-            newbase="${base/${{ inputs.package-version }}/${{ inputs.version }}}"
+            newbase="${base/${{ inputs.packageVersion }}/${{ inputs.version }}}"
             if [ "$base" != "$newbase" ]; then
               mv "$f" "$dir/$newbase"
             fi
