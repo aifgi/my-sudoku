@@ -331,7 +331,7 @@ private fun handleKeyEvent(
         keyEvent.key == Key.DirectionUp && selected >= 9 -> {
             onIntent(GameIntent.SelectCell(selected - 9)); true
         }
-        keyEvent.key == Key.DirectionDown && selected <= 71 -> {
+        keyEvent.key == Key.DirectionDown && selected in 0..71 -> {
             onIntent(GameIntent.SelectCell(selected + 9)); true
         }
         keyEvent.key == Key.DirectionLeft && selected % 9 > 0 -> {
