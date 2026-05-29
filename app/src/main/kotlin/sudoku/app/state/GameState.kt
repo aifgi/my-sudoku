@@ -44,6 +44,10 @@ data class GameState(
     val hintsRemaining: Int,
     val isGameOver: Boolean,
 ) {
+    /** True if there is in-progress game state worth confirming before discarding. */
+    val hasProgress: Boolean
+        get() = undoStack.isNotEmpty() && !isComplete && !isGameOver
+
     /** True while any AlertDialog is on screen; used to re-request keyboard focus after dismissal. */
     val hasAnyDialogVisible: Boolean
         get() = showQuitConfirmation || showNewGameConfirmation || isGameOver
