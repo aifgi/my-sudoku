@@ -189,7 +189,7 @@ Steps 11–13. Depends on Phase 3 being complete.
 
 ---
 
-- [ ] 4.2 Update `HintBanner` to render `HintExplanationData.Triple` and `HintExplanationData.Swordfish`
+- [x] 4.2 Update `HintBanner` to render `HintExplanationData.Triple` and `HintExplanationData.Swordfish`
   - **Do**:
     1. In the `when(explanationData)` block of `HintBanner.kt`, add a branch for `is HintExplanationData.Triple` — display `strings.hintNakedTriple` or `strings.hintHiddenTriple` label (determine which by checking if the triple is a naked or hidden variant; if `HintResult.Found` carries the technique type, use it; otherwise add a `isHidden: Boolean` field to `Triple` or use a separate `HiddenTriple` subclass if design calls for it — follow whichever pattern `Pair` uses) plus the explanation via `strings.hintExplainNakedTriple` / `strings.hintExplainHiddenTriple`
     2. Add a branch for `is HintExplanationData.Swordfish` — display `strings.hintSwordfish` label plus `strings.hintExplainSwordfish(explanationData.digit)`
