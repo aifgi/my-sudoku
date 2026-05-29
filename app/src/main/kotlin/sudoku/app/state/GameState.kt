@@ -91,6 +91,9 @@ data class GameState(
                selectedIndex == other.selectedIndex &&
                numberHighlightDigit == other.numberHighlightDigit &&
                hintResult == other.hintResult &&
+               // Size-only comparison is intentional: stack contents always change together
+               // with `digits` (every push stores the old digits), so a same-size/same-digits
+               // pair implies identical contents in normal gameplay.
                undoStack.size == other.undoStack.size &&
                redoStack.size == other.redoStack.size &&
                timerSeconds == other.timerSeconds &&
