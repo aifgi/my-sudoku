@@ -91,10 +91,11 @@ class GameViewModel(
             val board = Board.fromDigits(state.digits, state.givens)
             val hint = HintEngine.findHint(board, state.difficulty)
             val hintIndex = if (hint is sudoku.engine.HintResult.Found) hint.targetCells.firstOrNull() else null
+            val hintFound = hint is sudoku.engine.HintResult.Found
             state.copy(
                 hintResult = hint,
                 numberHighlightDigit = null,
-                hintsRemaining = maxOf(0, state.hintsRemaining - 1),
+                hintsRemaining = if (hintFound) maxOf(0, state.hintsRemaining - 1) else state.hintsRemaining,
                 selectedIndex = hintIndex ?: state.selectedIndex,
             )
         }
