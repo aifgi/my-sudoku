@@ -22,12 +22,16 @@ import androidx.compose.ui.unit.dp
 import sudoku.app.ui.i18n.AppLocale
 import sudoku.app.ui.i18n.LocalStrings
 import sudoku.engine.Difficulty
+import sudoku.engine.GivenGrade
+import sudoku.engine.PuzzleDifficulty
 
 @Composable
 fun HomeScreen(
-    onDifficultySelected: (Difficulty) -> Unit,
+    onDifficultySelected: (PuzzleDifficulty) -> Unit,
     currentLocale: AppLocale,
     onLocaleChange: (AppLocale) -> Unit,
+    currentMode: DifficultyMode,
+    onModeChange: (DifficultyMode) -> Unit,
 ) {
     val strings = LocalStrings.current
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -63,19 +67,73 @@ fun HomeScreen(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { onDifficultySelected(Difficulty.EASY) }, modifier = Modifier.widthIn(min = 200.dp)) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                TextButton(
+                    onClick = { if (currentMode != DifficultyMode.TECHNIQUE) onModeChange(DifficultyMode.TECHNIQUE) },
+                    modifier = Modifier.alpha(if (currentMode == DifficultyMode.TECHNIQUE) 1f else 0.4f),
+                ) {
+                    Text(
+                        text = strings.modeTechnique,
+                        fontWeight = if (currentMode == DifficultyMode.TECHNIQUE) FontWeight.Bold else FontWeight.Normal,
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                TextButton(
+                    onClick = { if (currentMode != DifficultyMode.GIVEN) onModeChange(DifficultyMode.GIVEN) },
+                    modifier = Modifier.alpha(if (currentMode == DifficultyMode.GIVEN) 1f else 0.4f),
+                ) {
+                    Text(
+                        text = strings.modeGiven,
+                        fontWeight = if (currentMode == DifficultyMode.GIVEN) FontWeight.Bold else FontWeight.Normal,
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    onDifficultySelected(
+                        if (currentMode == DifficultyMode.TECHNIQUE) PuzzleDifficulty.Technique(Difficulty.EASY)
+                        else PuzzleDifficulty.Given(GivenGrade.EASY)
+                    )
+                },
+                modifier = Modifier.widthIn(min = 200.dp),
+            ) {
                 Text(strings.difficultyEasy)
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { onDifficultySelected(Difficulty.MEDIUM) }, modifier = Modifier.widthIn(min = 200.dp)) {
+            Button(
+                onClick = {
+                    onDifficultySelected(
+                        if (currentMode == DifficultyMode.TECHNIQUE) PuzzleDifficulty.Technique(Difficulty.MEDIUM)
+                        else PuzzleDifficulty.Given(GivenGrade.MEDIUM)
+                    )
+                },
+                modifier = Modifier.widthIn(min = 200.dp),
+            ) {
                 Text(strings.difficultyMedium)
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { onDifficultySelected(Difficulty.HARD) }, modifier = Modifier.widthIn(min = 200.dp)) {
+            Button(
+                onClick = {
+                    onDifficultySelected(
+                        if (currentMode == DifficultyMode.TECHNIQUE) PuzzleDifficulty.Technique(Difficulty.HARD)
+                        else PuzzleDifficulty.Given(GivenGrade.HARD)
+                    )
+                },
+                modifier = Modifier.widthIn(min = 200.dp),
+            ) {
                 Text(strings.difficultyHard)
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { onDifficultySelected(Difficulty.EXPERT) }, modifier = Modifier.widthIn(min = 200.dp)) {
+            Button(
+                onClick = {
+                    onDifficultySelected(
+                        if (currentMode == DifficultyMode.TECHNIQUE) PuzzleDifficulty.Technique(Difficulty.EXPERT)
+                        else PuzzleDifficulty.Given(GivenGrade.EXPERT)
+                    )
+                },
+                modifier = Modifier.widthIn(min = 200.dp),
+            ) {
                 Text(strings.difficultyExpert)
             }
             Spacer(modifier = Modifier.height(8.dp))

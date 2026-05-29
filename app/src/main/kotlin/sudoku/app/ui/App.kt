@@ -27,6 +27,7 @@ private fun resolveInitialLocale(): AppLocale =
 @Composable
 fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
     var locale by remember { mutableStateOf(resolveInitialLocale()) }
+    var mode by remember { mutableStateOf(AppPreferences.loadMode()) }
     val state by viewModel.state.collectAsState()
     val onIntent = viewModel::dispatch
 
@@ -36,12 +37,17 @@ fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
             state.digits.all { it == 0 } && !state.isComplete && state.undoStack.isEmpty() ->
                 HomeScreen(
                     onDifficultySelected = { difficulty ->
-                        onIntent(GameIntent.StartNewGame(PuzzleDifficulty.Technique(difficulty)))
+                        onIntent(GameIntent.StartNewGame(difficulty))
                     },
                     currentLocale = locale,
                     onLocaleChange = { newLocale ->
                         locale = newLocale
                         AppPreferences.saveLocale(newLocale)
+                    },
+                    currentMode = mode,
+                    onModeChange = { newMode ->
+                        mode = newMode
+                        AppPreferences.saveMode(newMode)
                     },
                 )
             else -> GameScreen(state = state, onIntent = onIntent)

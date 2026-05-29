@@ -172,7 +172,7 @@ Steps 11–13. Depends on Phase 3 being complete.
 
 ---
 
-- [ ] 4.1 Update `HomeScreen` with mode toggle and `PuzzleDifficulty` emission; wire mode in `App.kt`
+- [x] 4.1 Update `HomeScreen` with mode toggle and `PuzzleDifficulty` emission; wire mode in `App.kt`
   - **Do**:
     1. Add `currentMode: DifficultyMode` and `onModeChange: (DifficultyMode) -> Unit` parameters to `HomeScreen` composable signature alongside the existing `onDifficultySelected`, `currentLocale`, and `onLocaleChange` params
     2. Add mode toggle UI above the difficulty buttons — two `TextButton`s (Technique / Given) styled with `alpha()` modifier matching the existing locale toggle pattern; labels from `strings.modeTechnique` / `strings.modeGiven`
