@@ -31,6 +31,7 @@ fun HintBanner(hintResult: HintResult?) {
                         "Naked Pair"     -> strings.hintNakedPair
                         "Hidden Pair"    -> strings.hintHiddenPair
                         "Pointing Pair"  -> strings.hintPointingPair
+                        "X-Wing"         -> strings.hintXWing
                         "Naked Triple"   -> strings.hintNakedTriple
                         "Hidden Triple"  -> strings.hintHiddenTriple
                         "Swordfish"      -> strings.hintSwordfish

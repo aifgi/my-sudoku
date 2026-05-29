@@ -30,6 +30,7 @@ object RussianStrings : Strings {
         { digit, box, row -> "Указывающая пара: цифра $digit в блоке $box ограничена строкой $row, исключая её из других клеток строки" }
     override val hintExplainPointingPairCol: (Int, Int, Int) -> String =
         { digit, box, col -> "Указывающая пара: цифра $digit в блоке $box ограничена столбцом $col, исключая её из других клеток столбца" }
+    override val hintXWing = "Крыло-Икс"
     override val hintNakedTriple = "Открытая тройка"
     override val hintHiddenTriple = "Скрытая тройка"
     override val hintSwordfish = "Рыба-меч"

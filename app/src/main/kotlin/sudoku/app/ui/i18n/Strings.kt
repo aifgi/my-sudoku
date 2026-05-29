@@ -29,6 +29,7 @@ interface Strings {
     val hintExplainHiddenPair: (cell1: String, cell2: String, d1: Int, d2: Int) -> String
     val hintExplainPointingPairRow: (digit: Int, box: Int, row: Int) -> String
     val hintExplainPointingPairCol: (digit: Int, box: Int, col: Int) -> String
+    val hintXWing: String
     val hintNakedTriple: String
     val hintHiddenTriple: String
     val hintSwordfish: String
