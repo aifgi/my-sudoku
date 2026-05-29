@@ -10,23 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
-      packageVersion: ${{ steps.version.outputs.packageVersion }}
     steps:
       - name: Extract version from tag
         id: version
-        run: |
-          version="${GITHUB_REF#refs/tags/release-}"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          # jpackage requires the first version component to be >= 1; bump leading zero
-          packageVersion=$(echo "$version" | sed 's/^0\./1./')
-          echo "packageVersion=$packageVersion" >> "$GITHUB_OUTPUT"
+        run: echo "version=${GITHUB_REF#refs/tags/release-}" >> "$GITHUB_OUTPUT"
 
   build:
     needs: prepare
     uses: ./.github/workflows/_build.yml
     with:
       version: ${{ needs.prepare.outputs.version }}
-      packageVersion: ${{ needs.prepare.outputs.packageVersion }}
 
   release:
     needs: [prepare, build]

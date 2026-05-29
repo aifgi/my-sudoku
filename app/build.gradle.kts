@@ -117,7 +117,9 @@ compose.desktop {
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
             )
             packageName = "Sudoku"
-            packageVersion = (findProperty("packageVersion") as String?) ?: "1.0.0"
+            val rawVersion = (findProperty("packageVersion") as String?) ?: "1.0.0"
+            // jpackage requires the first version component to be >= 1
+            packageVersion = if (rawVersion.startsWith("0.")) "1." + rawVersion.substringAfter("0.") else rawVersion
             description = "Sudoku puzzle game"
             windows {
                 menuGroup = "Sudoku"
