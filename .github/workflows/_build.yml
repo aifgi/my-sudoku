@@ -3,6 +3,9 @@ name: Build App
 on:
   workflow_call:
     inputs:
+      version:
+        type: string
+        default: ''
       package-version:
         type: string
         default: ''
@@ -45,6 +48,19 @@ jobs:
         run: >
           ./gradlew :engine:test :app:${{ matrix.task }}
           ${{ inputs.package-version != '' && format('-PpackageVersion={0}', inputs.package-version) || '' }}
+
+      - name: Rename artifacts to real version
+        if: inputs.version != '' && inputs.version != inputs.package-version
+        shell: bash
+        run: |
+          find "${{ matrix.artifact-path }}" -type f | while read -r f; do
+            dir=$(dirname "$f")
+            base=$(basename "$f")
+            newbase="${base/${{ inputs.package-version }}/${{ inputs.version }}}"
+            if [ "$base" != "$newbase" ]; then
+              mv "$f" "$dir/$newbase"
+            fi
+          done
 
       - name: Upload jpackage logs on failure
         if: failure()
