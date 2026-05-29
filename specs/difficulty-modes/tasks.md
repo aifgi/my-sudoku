@@ -135,7 +135,7 @@ Steps 7–13. Tasks in this phase depend on Phase 1 (PuzzleDifficulty sealed cla
 
 ---
 
-- [ ] 3.3 Update `GameViewModel` to dispatch `PuzzleDifficulty` through `launchGeneration` and `RequestHint`
+- [x] 3.3 Update `GameViewModel` to dispatch `PuzzleDifficulty` through `launchGeneration` and `RequestHint`
   - **Do**:
     1. Update `launchGeneration(difficulty: PuzzleDifficulty)` — `when (difficulty)` dispatch: `is PuzzleDifficulty.Technique` calls `Generator.generate(difficulty.grade)`; `is PuzzleDifficulty.Given` calls `Generator.generateByGivenCount(difficulty.grade)`
     2. In the `RequestHint` handler, pass `state.difficulty` (already `PuzzleDifficulty`) directly to `HintEngine.findHint(board, state.difficulty)` — no cast needed
