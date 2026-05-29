@@ -106,7 +106,6 @@ class GameViewModel(
         is GameIntent.TimerTick -> if (!state.isPaused && !state.isComplete && !state.isGameOver && !state.isLoading)
             state.copy(timerSeconds = state.timerSeconds + 1)
         else state
-        is GameIntent.GameCompleted -> state.copy(isComplete = true)
         is GameIntent.ShowQuitConfirmation -> state.copy(showQuitConfirmation = true)
         is GameIntent.ConfirmQuit -> state.copy(showQuitConfirmation = false)
         is GameIntent.CancelQuit -> state.copy(showQuitConfirmation = false)

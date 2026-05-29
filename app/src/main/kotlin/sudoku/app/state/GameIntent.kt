@@ -34,6 +34,4 @@ sealed class GameIntent {
     data object TogglePause : GameIntent()
     data object TimerTick : GameIntent()
 
-    // Completion
-    data object GameCompleted : GameIntent()
 }
