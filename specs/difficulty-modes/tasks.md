@@ -150,7 +150,7 @@ Steps 7–13. Tasks in this phase depend on Phase 1 (PuzzleDifficulty sealed cla
 
 ---
 
-- [ ] 3.4 Add all new i18n string keys to `Strings`, `EnglishStrings`, and `RussianStrings`
+- [x] 3.4 Add all new i18n string keys to `Strings`, `EnglishStrings`, and `RussianStrings`
   - **Do**:
     1. In `Strings.kt`, add to the interface: `val modeTechnique: String`, `val modeGiven: String`, `val hintNakedTriple: String`, `val hintHiddenTriple: String`, `val hintSwordfish: String`, `val hintExplainNakedTriple: (String, String, String, Int, Int, Int) -> String`, `val hintExplainHiddenTriple: (String, String, String, Int, Int, Int) -> String`, `val hintExplainSwordfish: (Int) -> String`
     2. In `EnglishStrings.kt`, add values: `modeTechnique = "Technique"`, `modeGiven = "Given Count"`, `hintNakedTriple = "Naked Triple"`, `hintHiddenTriple = "Hidden Triple"`, `hintSwordfish = "Swordfish"`, and the three lambda explanations per the design

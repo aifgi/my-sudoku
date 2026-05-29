@@ -30,6 +30,17 @@ object EnglishStrings : Strings {
         { digit, box, row -> "Pointing Pair: digit $digit in box $box is confined to row $row, eliminating it from other row cells" }
     override val hintExplainPointingPairCol: (Int, Int, Int) -> String =
         { digit, box, col -> "Pointing Pair: digit $digit in box $box is confined to column $col, eliminating it from other column cells" }
+    override val hintNakedTriple = "Naked Triple"
+    override val hintHiddenTriple = "Hidden Triple"
+    override val hintSwordfish = "Swordfish"
+    override val hintExplainNakedTriple: (String, String, String, Int, Int, Int) -> String =
+        { c1, c2, c3, d1, d2, d3 -> "Naked Triple at $c1, $c2, $c3: digits $d1, $d2, $d3 confined here" }
+    override val hintExplainHiddenTriple: (String, String, String, Int, Int, Int) -> String =
+        { c1, c2, c3, d1, d2, d3 -> "Hidden Triple at $c1, $c2, $c3: digits $d1, $d2, $d3 confined to these cells" }
+    override val hintExplainSwordfish: (Int) -> String =
+        { digit -> "Swordfish: digit $digit eliminated from rows" }
+    override val modeTechnique = "Technique"
+    override val modeGiven = "Given Count"
 
     override val pauseTitle = "Game Paused"
     override val pauseResume = "Resume"

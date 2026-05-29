@@ -30,6 +30,17 @@ object RussianStrings : Strings {
         { digit, box, row -> "Указывающая пара: цифра $digit в блоке $box ограничена строкой $row, исключая её из других клеток строки" }
     override val hintExplainPointingPairCol: (Int, Int, Int) -> String =
         { digit, box, col -> "Указывающая пара: цифра $digit в блоке $box ограничена столбцом $col, исключая её из других клеток столбца" }
+    override val hintNakedTriple = "Открытая тройка"
+    override val hintHiddenTriple = "Скрытая тройка"
+    override val hintSwordfish = "Рыба-меч"
+    override val hintExplainNakedTriple: (String, String, String, Int, Int, Int) -> String =
+        { c1, c2, c3, d1, d2, d3 -> "Открытая тройка в $c1, $c2, $c3: цифры $d1, $d2, $d3 заперты здесь" }
+    override val hintExplainHiddenTriple: (String, String, String, Int, Int, Int) -> String =
+        { c1, c2, c3, d1, d2, d3 -> "Скрытая тройка в $c1, $c2, $c3: цифры $d1, $d2, $d3 заперты в этих клетках" }
+    override val hintExplainSwordfish: (Int) -> String =
+        { digit -> "Рыба-меч: цифра $digit исключена из строк" }
+    override val modeTechnique = "Техника"
+    override val modeGiven = "Количество подсказок"
 
     override val pauseTitle = "Игра на паузе"
     override val pauseResume = "Продолжить"
