@@ -35,6 +35,7 @@ data class GameState(
     // New game confirmation dialog
     val showNewGameConfirmation: Boolean,
     val newGameTargetDifficulty: PuzzleDifficulty?,
+    val pendingGoToHome: Boolean,
 
     // Quit confirmation dialog
     val showQuitConfirmation: Boolean,
@@ -71,6 +72,7 @@ data class GameState(
             pendingDifficulty = null,
             showNewGameConfirmation = false,
             newGameTargetDifficulty = null,
+            pendingGoToHome = false,
             showQuitConfirmation = false,
             mistakeCount = 0,
             hintsRemaining = 3,
@@ -102,7 +104,8 @@ data class GameState(
                showQuitConfirmation == other.showQuitConfirmation &&
                mistakeCount == other.mistakeCount &&
                hintsRemaining == other.hintsRemaining &&
-               isGameOver == other.isGameOver
+               isGameOver == other.isGameOver &&
+               pendingGoToHome == other.pendingGoToHome
     }
 
     override fun hashCode(): Int = digits.contentHashCode() * 31 + givens.contentHashCode()

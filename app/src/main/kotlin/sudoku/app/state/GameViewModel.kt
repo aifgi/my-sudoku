@@ -44,6 +44,11 @@ class GameViewModel(
                 newGameTargetDifficulty = null,
             )
         }
+        is GameIntent.GoToHome -> if (state.hasProgress) {
+            state.copy(showNewGameConfirmation = true, pendingGoToHome = true)
+        } else {
+            GameState.Initial
+        }
         is GameIntent.PuzzleGenerated -> {
             val digits = intent.board.digits.copyOf()
             val givens = intent.board.givens.copyOf()
@@ -104,19 +109,24 @@ class GameViewModel(
         is GameIntent.ShowQuitConfirmation -> state.copy(showQuitConfirmation = true)
         is GameIntent.ConfirmQuit -> state.copy(showQuitConfirmation = false)
         is GameIntent.CancelQuit -> state.copy(showQuitConfirmation = false)
-        is GameIntent.ConfirmNewGame -> state.copy(
-            isLoading = true,
-            pendingDifficulty = state.newGameTargetDifficulty ?: state.difficulty,
-            difficulty = state.newGameTargetDifficulty ?: state.difficulty,
-            undoStack = emptyList(),
-            redoStack = emptyList(),
-            hintResult = null,
-            showNewGameConfirmation = false,
-            newGameTargetDifficulty = null,
-        )
+        is GameIntent.ConfirmNewGame -> if (state.pendingGoToHome) {
+            GameState.Initial
+        } else {
+            state.copy(
+                isLoading = true,
+                pendingDifficulty = state.newGameTargetDifficulty ?: state.difficulty,
+                difficulty = state.newGameTargetDifficulty ?: state.difficulty,
+                undoStack = emptyList(),
+                redoStack = emptyList(),
+                hintResult = null,
+                showNewGameConfirmation = false,
+                newGameTargetDifficulty = null,
+            )
+        }
         is GameIntent.CancelNewGame -> state.copy(
             showNewGameConfirmation = false,
             newGameTargetDifficulty = null,
+            pendingGoToHome = false,
         )
     }
 
@@ -203,7 +213,7 @@ class GameViewModel(
     private fun handleSideEffects(intent: GameIntent) {
         when (intent) {
             is GameIntent.StartNewGame -> if (!_state.value.showNewGameConfirmation) launchGeneration(intent.difficulty)
-            is GameIntent.ConfirmNewGame -> launchGeneration(_state.value.pendingDifficulty ?: _state.value.difficulty)
+            is GameIntent.ConfirmNewGame -> if (_state.value.isLoading) launchGeneration(_state.value.pendingDifficulty ?: _state.value.difficulty)
             is GameIntent.TogglePause -> syncTimer()
             is GameIntent.PuzzleGenerated -> startTimer()
             else -> {}

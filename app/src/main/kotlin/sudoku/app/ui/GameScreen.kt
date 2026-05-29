@@ -58,8 +58,6 @@ import sudoku.app.ui.components.NumberPad
 import sudoku.app.ui.components.PauseOverlay
 import sudoku.app.ui.components.SudokuBoard
 import sudoku.app.ui.components.formatTime
-import sudoku.engine.Difficulty
-import sudoku.engine.PuzzleDifficulty
 
 @Composable
 fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
@@ -103,8 +101,8 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
                 CompletionOverlay(
                     difficulty = state.difficulty,
                     timerSeconds = state.timerSeconds,
-                    onNewGame = { onIntent(GameIntent.StartNewGame(state.difficulty)) },
-                    onBackToHome = { onIntent(GameIntent.StartNewGame(PuzzleDifficulty.Technique(Difficulty.EASY))) },
+                    onNewGame = { onIntent(GameIntent.GoToHome) },
+                    onBackToHome = { onIntent(GameIntent.GoToHome) },
                 )
             }
         }
@@ -189,7 +187,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
 
             // New Game button
             Button(
-                onClick = { onIntent(GameIntent.StartNewGame(state.difficulty)) },
+                onClick = { onIntent(GameIntent.GoToHome) },
                 modifier = Modifier.fillMaxWidth().height(52.dp),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = AppColors.NewGameBtn,
@@ -209,7 +207,7 @@ fun GameScreen(state: GameState, onIntent: (GameIntent) -> Unit) {
 
     // Game over dialog
     if (state.isGameOver) {
-        GameOverDialog(mistakeCount = state.mistakeCount, onNewGame = { onIntent(GameIntent.StartNewGame(state.difficulty)) })
+        GameOverDialog(mistakeCount = state.mistakeCount, onNewGame = { onIntent(GameIntent.GoToHome) })
     }
 
     // New game confirmation dialog
@@ -364,7 +362,7 @@ private fun handleKeyEvent(
             onIntent(GameIntent.Redo); true
         }
         (keyEvent.isCtrlPressed || keyEvent.isMetaPressed) && keyEvent.key == Key.N -> {
-            onIntent(GameIntent.StartNewGame(state.difficulty)); true
+            onIntent(GameIntent.GoToHome); true
         }
         else -> {
             val digit = when (keyEvent.key) {

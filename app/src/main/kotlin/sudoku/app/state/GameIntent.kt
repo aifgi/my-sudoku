@@ -6,6 +6,7 @@ import sudoku.engine.PuzzleDifficulty
 sealed class GameIntent {
     // Navigation / lifecycle
     data class StartNewGame(val difficulty: PuzzleDifficulty) : GameIntent()
+    data object GoToHome : GameIntent()
     data object ConfirmNewGame : GameIntent()
     data object CancelNewGame : GameIntent()
 
