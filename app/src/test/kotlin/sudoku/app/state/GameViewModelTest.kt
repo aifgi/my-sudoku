@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.TestScope
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import sudoku.engine.Difficulty
+import sudoku.engine.PuzzleDifficulty
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GameViewModelTest {
@@ -75,7 +76,7 @@ class GameViewModelTest {
             digits = digits,
             givens = givens,
             solution = solution,
-            difficulty = Difficulty.EASY,
+            difficulty = PuzzleDifficulty.Technique(Difficulty.EASY),
         )
     }
 
@@ -179,7 +180,7 @@ class GameViewModelTest {
 
         // StartNewGame sets isLoading = true and triggers async puzzle generation.
         // We verify the reducer side immediately: isGameOver is NOT reset by StartNewGame itself.
-        vm.dispatch(GameIntent.StartNewGame(sudoku.engine.Difficulty.EASY))
+        vm.dispatch(GameIntent.StartNewGame(sudoku.engine.PuzzleDifficulty.Technique(sudoku.engine.Difficulty.EASY)))
         assertTrue(vm.state.value.isLoading, "isLoading should be true after StartNewGame")
 
         // Simulate the PuzzleGenerated callback that the async job would dispatch.

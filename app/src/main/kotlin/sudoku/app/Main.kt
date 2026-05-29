@@ -19,7 +19,7 @@ fun main() = application {
 
     Window(
         onCloseRequest = {
-            if (state.undoStack.isNotEmpty() && !state.isComplete) {
+            if (state.hasProgress) {
                 if (!state.showQuitConfirmation) {
                     viewModel.dispatch(GameIntent.ShowQuitConfirmation)
                 }

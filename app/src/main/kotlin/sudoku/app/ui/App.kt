@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import sudoku.app.state.GameIntent
 import sudoku.app.state.GameViewModel
+import sudoku.engine.PuzzleDifficulty
 import sudoku.app.ui.i18n.AppLocale
 import sudoku.app.ui.i18n.AppPreferences
 import sudoku.app.ui.i18n.LocalStrings
@@ -26,6 +27,7 @@ private fun resolveInitialLocale(): AppLocale =
 @Composable
 fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
     var locale by remember { mutableStateOf(resolveInitialLocale()) }
+    var mode by remember { mutableStateOf(AppPreferences.loadMode()) }
     val state by viewModel.state.collectAsState()
     val onIntent = viewModel::dispatch
 
@@ -41,6 +43,11 @@ fun App(viewModel: GameViewModel, onExitConfirmed: () -> Unit = {}) {
                     onLocaleChange = { newLocale ->
                         locale = newLocale
                         AppPreferences.saveLocale(newLocale)
+                    },
+                    currentMode = mode,
+                    onModeChange = { newMode ->
+                        mode = newMode
+                        AppPreferences.saveMode(newMode)
                     },
                 )
             else -> GameScreen(state = state, onIntent = onIntent)

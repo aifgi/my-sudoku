@@ -31,6 +31,9 @@ fun HintBanner(hintResult: HintResult?) {
                         "Naked Pair"     -> strings.hintNakedPair
                         "Hidden Pair"    -> strings.hintHiddenPair
                         "Pointing Pair"  -> strings.hintPointingPair
+                        "Naked Triple"   -> strings.hintNakedTriple
+                        "Hidden Triple"  -> strings.hintHiddenTriple
+                        "Swordfish"      -> strings.hintSwordfish
                         else             -> result.technique
                     }
                     val explanationText = when (val data = result.explanationData) {
@@ -44,6 +47,16 @@ fun HintBanner(hintResult: HintResult?) {
                             strings.hintExplainPointingPairRow(data.digit, data.box, data.row)
                         is HintExplanationData.PointingPairCol ->
                             strings.hintExplainPointingPairCol(data.digit, data.box, data.col)
+                        is HintExplanationData.Triple -> {
+                            val c1 = "R${data.cell1 / 9 + 1}C${data.cell1 % 9 + 1}"
+                            val c2 = "R${data.cell2 / 9 + 1}C${data.cell2 % 9 + 1}"
+                            val c3 = "R${data.cell3 / 9 + 1}C${data.cell3 % 9 + 1}"
+                            if (result.technique == "Naked Triple")
+                                strings.hintExplainNakedTriple(c1, c2, c3, data.d1, data.d2, data.d3)
+                            else
+                                strings.hintExplainHiddenTriple(c1, c2, c3, data.d1, data.d2, data.d3)
+                        }
+                        is HintExplanationData.Swordfish -> strings.hintExplainSwordfish(data.digit)
                         null -> result.explanation
                     }
                     Column {

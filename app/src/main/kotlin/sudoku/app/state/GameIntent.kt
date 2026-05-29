@@ -1,11 +1,11 @@
 package sudoku.app.state
 
 import sudoku.engine.Board
-import sudoku.engine.Difficulty
+import sudoku.engine.PuzzleDifficulty
 
 sealed class GameIntent {
     // Navigation / lifecycle
-    data class StartNewGame(val difficulty: Difficulty) : GameIntent()
+    data class StartNewGame(val difficulty: PuzzleDifficulty) : GameIntent()
     data object ConfirmNewGame : GameIntent()
     data object CancelNewGame : GameIntent()
 

@@ -5,6 +5,8 @@ sealed class HintExplanationData {
     data class Pair(val cell1: String, val cell2: String, val d1: Int, val d2: Int) : HintExplanationData()
     data class PointingPairRow(val digit: Int, val box: Int, val row: Int) : HintExplanationData()
     data class PointingPairCol(val digit: Int, val box: Int, val col: Int) : HintExplanationData()
+    data class Triple(val cell1: Int, val cell2: Int, val cell3: Int, val d1: Int, val d2: Int, val d3: Int) : HintExplanationData()
+    data class Swordfish(val digit: Int) : HintExplanationData()
 }
 
 sealed class HintResult {

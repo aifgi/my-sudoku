@@ -29,6 +29,16 @@ interface Strings {
     val hintExplainHiddenPair: (cell1: String, cell2: String, d1: Int, d2: Int) -> String
     val hintExplainPointingPairRow: (digit: Int, box: Int, row: Int) -> String
     val hintExplainPointingPairCol: (digit: Int, box: Int, col: Int) -> String
+    val hintNakedTriple: String
+    val hintHiddenTriple: String
+    val hintSwordfish: String
+    val hintExplainNakedTriple: (c1: String, c2: String, c3: String, d1: Int, d2: Int, d3: Int) -> String
+    val hintExplainHiddenTriple: (c1: String, c2: String, c3: String, d1: Int, d2: Int, d3: Int) -> String
+    val hintExplainSwordfish: (digit: Int) -> String
+
+    // Mode toggle
+    val modeTechnique: String
+    val modeGiven: String
 
     // Pause overlay
     val pauseTitle: String
